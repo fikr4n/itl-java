@@ -1,0 +1,38 @@
+AUTHOR
+======
+
+Fikrul Arif
+Prayer time calculation is based on JITL by Mahdi (http://sourceforge.net/projects/jitl/)
+
+ORIGINAL DEVELOPERS OF C VERSION
+================================
+
+(To reach any/all of the contributors mail to developer -at- arabeyes . org)
+
+PACKAGE - Hijri
+---------------
+
+Nadim Shaikli:
+- Contributed brute force calculation method 
+
+Fayez Alhargan: 
+- Author of Umm Alqura code of hijri. For contact info, see the file:
+  hijri/src/umm_alqura.c
+
+
+PACKAGE - Prayertime
+--------------------
+
+Thamer Mahmoud:
+- Contributed the prayertime backend code
+
+
+PACKAGE - Build process
+-----------------------
+
+-Samy Al Bahra:
+- Autoconf generation and support files
+
+Thamer Mahmoud:
+- Shared/Static library build process
+- Debian packaging
