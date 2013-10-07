@@ -2,10 +2,11 @@ AUTHOR
 ======
 
 Fikrul Arif
+
 Prayer time calculation is based on JITL by Mahdi (http://sourceforge.net/projects/jitl/)
 
-ORIGINAL DEVELOPERS OF C VERSION
-================================
+ORIGINAL DEVELOPERS OF C VERSION (Copied from the original source code)
+=======================================================================
 
 (To reach any/all of the contributors mail to developer -at- arabeyes . org)
 
@@ -30,7 +31,7 @@ Thamer Mahmoud:
 PACKAGE - Build process
 -----------------------
 
--Samy Al Bahra:
+Samy Al Bahra:
 - Autoconf generation and support files
 
 Thamer Mahmoud:
