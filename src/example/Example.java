@@ -15,9 +15,9 @@ import org.arabeyes.itl.prayer.astro.Location;
 public class Example {
 
 	public static void main(String[] args) {
+		showPrayerTime();
 		showHijri();
 		showUmmAlqura();
-		showPrayerTime();
 	}
 	
 	public static void showHijri() {
@@ -53,7 +53,7 @@ public class Example {
 		/* We use the default locale to print the name of days and months. */
 		Locale locale = Locale.getDefault();
 		
-		/* Convert current date to Hijri calendar. */
+		/* Convert current date to Umm Al-Qura calendar. */
 		SimpleHijriDate hdate = HijriCalc.toUmmAlqura(new Date());
 		
 		/* Print it. */
