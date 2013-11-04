@@ -1,8 +1,5 @@
 # بسم الله الرّحمٰن الرّحيم #
 
-ITL Java
-========
-
 ITL Java is a Java library based on LGPL-licensed
 [ITL (Islamic Tools and Libraries)](http://projects.arabeyes.org/project.php?proj=ITL),
 currently includes prayer times (salat), Hijri date, and qibla direction.
@@ -15,6 +12,7 @@ Prayer time
 
 ### Basic usage
 
+``` java
     /* As an example, we use Depok (West Java, Indonesia) as the location
      * and Egyptian General Authority of Survey as the method. */
     
@@ -31,9 +29,11 @@ Prayer time
     
 	PrayerTime fajr = prayerTimes.get(PrayerTimes.FAJR);
 	System.out.printl(fajr.getHour() + ":" + fajr.getMinute());
+```
 
 ### Qibla direction
 
+``` java
 	PrayerTimeCalc calculator = . . .
 	System.out.println(calculator.getNorthQibla());
 	
@@ -41,9 +41,11 @@ Prayer time
 	
 	Location location = . . .
 	System.out.println(PrayerTimeCalc.getNorthQibla(location));
+```
 
 ### Using built-in names
 
+``` java
 	PrayerTimes prayerTimes = . . .
 	
 	/* Print all using default locale. */
@@ -58,18 +60,20 @@ Prayer time
 				prayerTimes.get(i).getHour(),
 				prayerTimes.get(i).getMinute());
 	}
+```
 
 ### Using imsak
 
 Imsak (minutes before saum/fasting) is calculated separately, i.e. not using
 `PrayerTimeCalc.getPrayerTimes()`.
 
-
+``` java
 	/* Print imsak for today. */
 	
 	PrayerTimeCalc calculator = . . .
 	PrayerTime imsakTime = calculator.getImsak(new Date());
 	System.out.println(imsakTime.getHour() + ":" + imsakTime.getMinute());
+```
 
 Hijri (and Umm Al-Qura) date
 ----------------------------
@@ -80,6 +84,7 @@ also be +2 or -2 :).
 
 ### Basic usage
 
+``` java
 	/* Convert current date to Hijri calendar. */
 	
 	SimpleHijriDate hdate = HijriCalc.toHijri(new Date());
@@ -89,9 +94,11 @@ also be +2 or -2 :).
 	System.out.println(hdate.getYear() + "-" +
 			(hdate.getMonth() + 1) + "-" +
 			hdate.getDayOfMonth());
+```
 
 ### Using built-in names
 
+``` java
 	SimpleHijriDate hdate = . . .
 	
 	System.out.printf("%s, %s %s %s %s\n",
@@ -105,15 +112,18 @@ also be +2 or -2 :).
 			hdate.getDayOfMonth(),
 			hdate.getMonthShortName(locale),
 			hdate.getYear());
+```
 	
 `get*Name()` above are the shortcuts for
 `HijriNames.getInstance(locale).get*Name()`.
 
 ### Using Umm Al-Qura
 
+``` java
 	/* Convert current date to Umm Al-Qura calendar. */
 	
 	SimpleHijriDate hdate = HijriCalc.toUmmAlqura(new Date());
+```
 
 Prayer times calculation methods
 ================================
