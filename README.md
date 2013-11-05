@@ -4,22 +4,23 @@ ITL Java is a Java library based on LGPL-licensed
 [ITL (Islamic Tools and Libraries)](http://projects.arabeyes.org/project.php?proj=ITL),
 currently includes prayer times (salat), Hijri date, and qibla direction.
 
-Usage Examples
-==============
+## Usage examples ##
 
-Prayer time
------------
+Examples below will show you how simple using this library for calculating prayer time, qibla
+direction, and Hijri calendar. Besides that, built-in names are also included so you can
+display it directly to the user.
 
-### Basic usage
+### Prayer time ###
+
+**Basic usage**
 
 ``` java
-    /* As an example, we use Depok (West Java, Indonesia) as the location
-     * and Egyptian General Authority of Survey as the method. */
-    
-    // new Location(latitude, longitude, GMT diff, daylight saving time)
+	/* As an example, we use Depok (West Java, Indonesia) as the location
+	 * and Egyptian General Authority of Survey as the method. */
+	
+	// new Location(latitude, longitude, GMT diff, daylight saving time)
 	Location location = new Location(-6.37812775, 106.8342445, +7, 0);
-	PrayerTimeCalc calculator = new PrayerTimeCalc(location,
-		Method.EGYPT_SURVEY);
+	PrayerTimeCalc calculator = new PrayerTimeCalc(location, Method.EGYPT_SURVEY);
 	
 	/* Calculate prayer times for today. */
     
@@ -31,7 +32,7 @@ Prayer time
 	System.out.printl(fajr.getHour() + ":" + fajr.getMinute());
 ```
 
-### Qibla direction
+**Getting qibla direction**
 
 ``` java
 	PrayerTimeCalc calculator = . . .
@@ -43,18 +44,17 @@ Prayer time
 	System.out.println(PrayerTimeCalc.getNorthQibla(location));
 ```
 
-### Using built-in names
+**Displaying along with built-in prayer names**
 
 ``` java
 	PrayerTimes prayerTimes = . . .
 	
-	/* Print all using default locale. */
+	/* Print all prayers (Fajr .. Isha) and sunrise using default locale. */
 	
 	TimeNames names = TimeNames.getInstance(Locale.getDefault());
 	for (int i = 0; i < 6; ++i) {
 	
-		/* PrayerTimes.FAJR, PrayerTimes.ZUHR, etc are integer constants
-		 * from 0 to 5. */
+		/* PrayerTimes.FAJR, PrayerTimes.ZUHR, etc are integer constants from 0 to 5. */
 		System.out.printf("%s\t%s:%s\n",
 				names.get(i),
 				prayerTimes.get(i).getHour(),
@@ -62,7 +62,7 @@ Prayer time
 	}
 ```
 
-### Using imsak
+**Using imsak**
 
 Imsak (minutes before saum/fasting) is calculated separately, i.e. not using
 `PrayerTimeCalc.getPrayerTimes()`.
@@ -75,14 +75,13 @@ Imsak (minutes before saum/fasting) is calculated separately, i.e. not using
 	System.out.println(imsakTime.getHour() + ":" + imsakTime.getMinute());
 ```
 
-Hijri (and Umm Al-Qura) date
-----------------------------
+### Hijri (and Umm Al-Qura) date ###
 
-**Caution**: the calculation result is only an estimation, not to be used as the
+*Caution:* the calculation result is only an estimation, not to be used as the
 real reference. The error can be +1 or -1 day... Hmmm, I don't know if it can
 also be +2 or -2 :).
 
-### Basic usage
+**Basic usage**
 
 ``` java
 	/* Convert current date to Hijri calendar. */
@@ -96,7 +95,7 @@ also be +2 or -2 :).
 			hdate.getDayOfMonth());
 ```
 
-### Using built-in names
+**Displaying along with built-in month names**
 
 ``` java
 	SimpleHijriDate hdate = . . .
@@ -114,10 +113,9 @@ also be +2 or -2 :).
 			hdate.getYear());
 ```
 	
-`get*Name()` above are the shortcuts for
-`HijriNames.getInstance(locale).get*Name()`.
+`get*Name()` above are the shortcuts for `HijriNames.getInstance(locale).get*Name()`.
 
-### Using Umm Al-Qura
+**Using Umm Al-Qura**
 
 ``` java
 	/* Convert current date to Umm Al-Qura calendar. */
@@ -125,8 +123,7 @@ also be +2 or -2 :).
 	SimpleHijriDate hdate = HijriCalc.toUmmAlqura(new Date());
 ```
 
-Prayer times calculation methods
-================================
+## Prayer times calculation methods ##
 
 You can adjust your own method before calculating. However, it is encouraged
 to use one of this built-in methods. They are available as constants in
@@ -148,25 +145,23 @@ to use one of this built-in methods. They are available as constants in
 - **Fixed Ishaa Angle Interval (always 90)**  
   Usually used in Bahrain, Oman, Qatar, United Arab Emirates.
 
-License
-=======
+## License ##
 
 The original ITL is licensed under
 [GNU LGPL (Lesser General Public License)](https://www.gnu.org/licenses/lgpl.html)
 which means it is *free* and *remains free*: not only the "original" is free but
-also the "derived". So that, ITL Java is also LGPL :). If "legal words" make
-you "dizzy" (like me), type `lgpl v3 in short`, `lgpl v3 tl;dr`, etc in your
+also the "derived". So that, ITL Java is also LGPL-licensed. If legal words make
+you dizzy (like me), type "lgpl v3 in short", "lgpl v3 tl;dr", etc in your
 favorite search engine.
 
-Contribute
-==========
+## Contribute ##
 
 Do you want to contribute?
 
 - Testing the calculation result (and improving the algorithm if necessary).
 - Improving the Hijri calendar so that user can input the location.
-- Translation (i18n); *the fact is that the name of prayers or months can be*
-  *vary, for example in Indonesia Fajr is called Shubuh :)*.
+- Translation (i18n); the name of prayers or months can be
+  vary, for example in Indonesia Fajr is called Shubuh.
 - Etc.
 
 **Salam and have fun!**
