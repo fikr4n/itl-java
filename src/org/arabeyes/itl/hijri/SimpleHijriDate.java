@@ -27,125 +27,125 @@ import java.util.Locale;
  *
  */
 public class SimpleHijriDate {
-	/* This class uses Java convention so that month number is starting from 0 instead of 1.
-	 * But the original calculator uses 1-based month number.
-	 */
+    /* This class uses Java convention so that month number is starting from 0 instead of 1.
+     * But the original calculator uses 1-based month number.
+     */
 
-	/** Before Hijri. */
-	public static final int ERA_BH = -1;
-	/** After Hijri (anno-hegirae). */
-	public static final int ERA_AH = 0;
-	
-	private int year;
-	private int month;
-	private int dayOfMonth;
-	private int dayOfWeek;
-	private int monthLength;
-	private int era;
-	
-	SimpleHijriDate(HijriCalculator.sDate d) {
-		this.year = d.year;
-		this.month = d.month - 1;
-		this.dayOfMonth = d.day;
-		this.dayOfWeek = d.weekday;
-		this.monthLength = d.to_numdays;
-		if (HijriCalculator.HIJRI_BH.equals(d.units))
-			era = ERA_BH;
-		else
-			era = ERA_AH;
-	}
+    /** Before Hijri. */
+    public static final int ERA_BH = -1;
+    /** After Hijri (anno-hegirae). */
+    public static final int ERA_AH = 0;
+    
+    private int year;
+    private int month;
+    private int dayOfMonth;
+    private int dayOfWeek;
+    private int monthLength;
+    private int era;
+    
+    SimpleHijriDate(HijriCalculator.sDate d) {
+        this.year = d.year;
+        this.month = d.month - 1;
+        this.dayOfMonth = d.day;
+        this.dayOfWeek = d.weekday;
+        this.monthLength = d.to_numdays;
+        if (HijriCalculator.HIJRI_BH.equals(d.units))
+            era = ERA_BH;
+        else
+            era = ERA_AH;
+    }
 
-	/**
-	 * Start from 1.
-	 * @return
-	 */
-	public int getDayOfMonth() {
-		return dayOfMonth;
-	}
+    /**
+     * Start from 1.
+     * @return
+     */
+    public int getDayOfMonth() {
+        return dayOfMonth;
+    }
 
-	/**
-	 * Start from 0 for Ahad (Sunday).
-	 * @return
-	 */
-	public int getDayOfWeek() {
-		return dayOfWeek;
-	}
+    /**
+     * Start from 0 for Ahad (Sunday).
+     * @return
+     */
+    public int getDayOfWeek() {
+        return dayOfWeek;
+    }
 
-	/**
-	 * Start from 0 for Muharram.
-	 * @return
-	 */
-	public int getMonth() {
-		return month;
-	}
+    /**
+     * Start from 0 for Muharram.
+     * @return
+     */
+    public int getMonth() {
+        return month;
+    }
 
-	/**
-	 * The year.
-	 * @return
-	 */
-	public int getYear() {
-		return year;
-	}
+    /**
+     * The year.
+     * @return
+     */
+    public int getYear() {
+        return year;
+    }
 
-	/**
-	 * Number of days in this month.
-	 * @return
-	 */
-	public int getMonthLength() {
-		return monthLength;
-	}
-	
-	/**
-	 * Could be {@link #ERA_AH} or {@link #ERA_BH}.
-	 * @return
-	 */
-	public int getEra() {
-		return era;
-	}
-	
-	/**
-	 * Short cut for {@link HijriNames}.
-	 * @param locale
-	 * @return
-	 */
-	public String getDayOfWeekName(Locale locale) {
-		return HijriNames.getInstance(locale).getDayName(dayOfWeek);
-	}
-	
-	/**
-	 * Short cut for {@link HijriNames}.
-	 * @param locale
-	 * @return
-	 */
-	public String getDayOfWeekShortName(Locale locale) {
-		return HijriNames.getInstance(locale).getDayShortName(dayOfWeek);
-	}
-	
-	/**
-	 * Short cut for {@link HijriNames}.
-	 * @param locale
-	 * @return
-	 */
-	public String getMonthName(Locale locale) {
-		return HijriNames.getInstance(locale).getMonthName(month);
-	}
-	
-	/**
-	 * Short cut for {@link HijriNames}.
-	 * @param locale
-	 * @return
-	 */
-	public String getMonthShortName(Locale locale) {
-		return HijriNames.getInstance(locale).getMonthShortName(month);
-	}
-	
-	/**
-	 * Short cut for {@link HijriNames}.
-	 * @param locale
-	 * @return
-	 */
-	public String getEraName(Locale locale) {
-		return HijriNames.getInstance(locale).getEraName(era);
-	}
+    /**
+     * Number of days in this month.
+     * @return
+     */
+    public int getMonthLength() {
+        return monthLength;
+    }
+    
+    /**
+     * Could be {@link #ERA_AH} or {@link #ERA_BH}.
+     * @return
+     */
+    public int getEra() {
+        return era;
+    }
+    
+    /**
+     * Short cut for {@link HijriNames}.
+     * @param locale
+     * @return
+     */
+    public String getDayOfWeekName(Locale locale) {
+        return HijriNames.getInstance(locale).getDayName(dayOfWeek);
+    }
+    
+    /**
+     * Short cut for {@link HijriNames}.
+     * @param locale
+     * @return
+     */
+    public String getDayOfWeekShortName(Locale locale) {
+        return HijriNames.getInstance(locale).getDayShortName(dayOfWeek);
+    }
+    
+    /**
+     * Short cut for {@link HijriNames}.
+     * @param locale
+     * @return
+     */
+    public String getMonthName(Locale locale) {
+        return HijriNames.getInstance(locale).getMonthName(month);
+    }
+    
+    /**
+     * Short cut for {@link HijriNames}.
+     * @param locale
+     * @return
+     */
+    public String getMonthShortName(Locale locale) {
+        return HijriNames.getInstance(locale).getMonthShortName(month);
+    }
+    
+    /**
+     * Short cut for {@link HijriNames}.
+     * @param locale
+     * @return
+     */
+    public String getEraName(Locale locale) {
+        return HijriNames.getInstance(locale).getEraName(era);
+    }
 
 }
