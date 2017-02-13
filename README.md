@@ -2,7 +2,8 @@
 
 ITL Java is a Java library based on LGPL-licensed
 [ITL (Islamic Tools and Libraries)](http://projects.arabeyes.org/project.php?proj=ITL),
-currently includes prayer times (salat), Hijri date, and qibla direction.
+currently includes prayer times (salat), Hijri date, and qibla direction. The original C version is
+also available at [Github](https://github.com/arabeyes-org/ITL).
 
 _The license is LGPL, for more flexible library please see [ICLib](https://github.com/fikr4n/iclib-java)._
 

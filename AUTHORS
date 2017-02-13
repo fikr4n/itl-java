@@ -3,7 +3,8 @@ AUTHOR
 
 Fikrul Arif
 
-Prayer time calculation is based on JITL by Mahdi (http://sourceforge.net/projects/jitl/)
+Prayer time calculation was based on JITL by Mahdi (http://sourceforge.net/projects/jitl/) and then
+based on the original C code.
 
 ORIGINAL DEVELOPERS OF C VERSION (Copied from the original source code)
 =======================================================================
