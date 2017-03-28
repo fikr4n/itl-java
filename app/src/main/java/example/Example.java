@@ -1,16 +1,18 @@
 package example;
 
-import java.util.Date;
-import java.util.Locale;
-
+import org.arabeyes.itl.hijri.ConvertedDate;
 import org.arabeyes.itl.hijri.HijriCalc;
-import org.arabeyes.itl.hijri.SimpleHijriDate;
-import org.arabeyes.itl.prayer.Method;
-import org.arabeyes.itl.prayer.PrayerTime;
-import org.arabeyes.itl.prayer.PrayerTimeCalc;
-import org.arabeyes.itl.prayer.PrayerTimes;
-import org.arabeyes.itl.prayer.TimeNames;
-import org.arabeyes.itl.prayer.astro.Location;
+import org.arabeyes.itl.prayertime.Dms;
+import org.arabeyes.itl.prayertime.PrayerTime;
+import org.arabeyes.itl.prayertime.PrayerTimeCalc;
+import org.arabeyes.itl.prayertime.StandardMethod;
+import org.arabeyes.itl.prayertime.TimeNames;
+import org.arabeyes.itl.prayertime.TimeType;
+
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class Example {
 
@@ -22,86 +24,108 @@ public class Example {
     
     public static void showHijri() {
         System.out.println("=== HIJRI ===");
-        
-        /* We use the default locale to print the name of days and months. */
-        Locale locale = Locale.getDefault();
-        
-        /* Convert current date to Hijri calendar. */
-        SimpleHijriDate hdate = HijriCalc.toHijri(new Date());
-        
-        /* Print it. */
+
+        HijriCalc calculator = new HijriCalc(null);
+        // or
+        new HijriCalc(Locale.getDefault());
+
+        ConvertedDate date = calculator.toHijri(2016, 12, 2);
+        // or
+        calculator.toHijri(new Date());
+
+        System.out.println(date.format("EEEE, d MMMM yyyy G"));
+        System.out.println(date.format("EEE, d MMM yyyy G"));
+        System.out.println(date.format("EEE, dd-MM-yy G"));
+//        System.out.println(date.formatSource("EEEE, d MMMM yyyy G"));
+        System.out.println(date.toDate());
         System.out.printf("%s, %s %s %s %s\n",
-                hdate.getDayOfWeekName(locale),
-                hdate.getDayOfMonth(),
-                hdate.getMonthName(locale),
-                hdate.getYear(),
-                hdate.getEraName(locale));
+                date.getDayOfWeekName(),
+                date.getDayOfMonth(),
+                date.getMonthName(),
+                date.getYear(),
+                date.getEraName());
         System.out.printf("%s %s-%s-%s\n",
-                hdate.getDayOfWeekShortName(locale),
-                hdate.getDayOfMonth(),
-                hdate.getMonthShortName(locale),
-                hdate.getYear());
+                date.getDayOfWeekShortName(),
+                date.getDayOfMonth(),
+                date.getMonthShortName(),
+                date.getYear());
         System.out.printf("%s-%s-%s\n",
-                hdate.getDayOfMonth(),
-                hdate.getMonth() + 1, // Month (and also day of week) is started from 0
-                hdate.getYear());
+                date.getDayOfMonth(),
+                date.getMonth(),
+                date.getYear());
+
+        date = calculator.fromHijri(1438, 9, 1);
+        System.out.println(date.format("EEEE, d MMMM yyyy G"));
+//        System.out.println(date.formatSource("EEEE, d MMMM yyyy G"));
+        System.out.println(date.toDate());
     }
     
     public static void showUmmAlqura() {
         System.out.println("=== UMM AL-QURA ===");
-        
-        /* We use the default locale to print the name of days and months. */
-        Locale locale = Locale.getDefault();
-        
-        /* Convert current date to Umm Al-Qura calendar. */
-        SimpleHijriDate hdate = HijriCalc.toUmmAlqura(new Date());
-        
-        /* Print it. */
+
+        HijriCalc calculator = new HijriCalc(null);
+        // or
+        new HijriCalc(Locale.getDefault());
+
+        ConvertedDate date = calculator.toUmmAlqura(2016, 12, 2);
+        // or
+        calculator.toUmmAlqura(new Date());
+
+        System.out.println(date.format("EEEE, d MMMM yyyy G"));
+        System.out.println(date.format("EEE, d MMM yyyy G"));
+        System.out.println(date.format("EEE, dd-MM-yy G"));
+//        System.out.println(date.formatSource("EEEE, d MMMM yyyy G"));
+        System.out.println(date.toDate());
         System.out.printf("%s, %s %s %s %s\n",
-                hdate.getDayOfWeekName(locale),
-                hdate.getDayOfMonth(),
-                hdate.getMonthName(locale),
-                hdate.getYear(),
-                hdate.getEraName(locale));
+                date.getDayOfWeekName(),
+                date.getDayOfMonth(),
+                date.getMonthName(),
+                date.getYear(),
+                date.getEraName());
         System.out.printf("%s %s-%s-%s\n",
-                hdate.getDayOfWeekShortName(locale),
-                hdate.getDayOfMonth(),
-                hdate.getMonthShortName(locale),
-                hdate.getYear());
+                date.getDayOfWeekShortName(),
+                date.getDayOfMonth(),
+                date.getMonthShortName(),
+                date.getYear());
         System.out.printf("%s-%s-%s\n",
-                hdate.getDayOfMonth(),
-                hdate.getMonth() + 1, // Month (as well as day of week) is started from 0
-                hdate.getYear());
+                date.getDayOfMonth(),
+                date.getMonth(),
+                date.getYear());
+
+        date = calculator.fromUmmAlqura(1438, 9, 1);
+        System.out.println(date.format("EEEE, d MMMM yyyy G"));
+//        System.out.println(date.formatSource("EEEE, d MMMM yyyy G"));
+        System.out.println(date.toDate());
     }
     
     public static void showPrayerTime() {
         System.out.println("=== PRAYER TIME ===");
         
-        /* As an example, we use the location of Depok (West Java, Indonesia) and
-         * Egyptian General Authority of Survey method. */
-        Location location = new Location(-6.37812775, 106.8342445, +7, 0);
-        Method method = Method.EGYPT_SURVEY;
-        
-        /* Instantiate the calculator. */
-        PrayerTimeCalc calculator = new PrayerTimeCalc(location, method);
-        
-        /* Calculate prayer times for today. */
-        Date date = new Date();
-        PrayerTimes prayerTimes = calculator.getPrayerTimes(date);
-        PrayerTime imsakTime = calculator.getImsak(date);
-        
-        /* Print it (using default locale). */
-        TimeNames names = TimeNames.getInstance(Locale.getDefault());
-        System.out.printf("%s\t%s:%s\n",
-                names.getImsak(),
-                imsakTime.getHour(),
-                imsakTime.getMinute());
-        for (int i = 0; i < 6; ++i) {
+        PrayerTimeCalc calculator = new PrayerTimeCalc()
+                .setMethod(StandardMethod.EGYPT_SURVEY) // Egyptian General Authority of Survey
+                .setLocation(-6.37812775, 106.8342445, 0) // lat, lng, height AMSL
+                .setPressure(1010)
+                .setTemperature(10)
+                .setDate(new GregorianCalendar()); // today, here
+        // or
+        calculator.setDate(new Date(), TimeZone.getDefault());
+
+        TimeNames names = TimeNames.getInstance(null);
+        // or
+        TimeNames.getInstance(Locale.getDefault());
+
+        // Calculate and print each time
+        for (TimeType i : TimeType.values()) {
+            PrayerTime time = calculator.getTime(i);
             System.out.printf("%s\t%s:%s\n",
                     names.get(i),
-                    prayerTimes.get(i).getHour(),
-                    prayerTimes.get(i).getMinute());
+                    time.getHour(),
+                    time.getMinute());
         }
-        System.out.println("Qibla direction: " + calculator.getNorthQibla());
+
+        // Calculate and print qibla direction
+        Dms qibla = calculator.getQibla();
+        System.out.println("Qibla: " + qibla);
+        System.out.println("Qibla: " + qibla.toDecimal());
     }
 }
