@@ -32,8 +32,8 @@ public class Hijri {
         if (cal.get(Calendar.ERA) != GregorianCalendar.AD) // TODO: 2017-03-28 handle
             throw new IllegalArgumentException("Era other than AD is not supported");
 
-        return hDate(cal.get(Calendar.DAY_OF_MONTH),
-                cal.get(Calendar.MONTH) + 1, cal.get(Calendar.YEAR));
+        return hDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1,
+                cal.get(Calendar.DAY_OF_MONTH));
     }
 
     /**
@@ -46,5 +46,4 @@ public class Hijri {
             throw new ConversionException("Failed to convert (error=" + error + ")");
         return new ConvertedDate(d, year, month, day, names, ConvertedDate.TYPE_GREGORIAN);
     }
-
 }
