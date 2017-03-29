@@ -138,103 +138,116 @@ public class Method {
         return fajrAng;
     }
 
-    public void setFajrAngle(double fajrAng) {
+    public Method setFajrAngle(double fajrAng) {
         this.fajrAng = fajrAng;
+        return this;
     }
 
     public double getIshaaAngle() {
         return ishaaAng;
     }
 
-    public void setIshaaAngle(double ishaaAng) {
+    public Method setIshaaAngle(double ishaaAng) {
         this.ishaaAng = ishaaAng;
+        return this;
     }
 
     public double getImsaakAngle() {
         return imsaakAng;
     }
 
-    public void setImsaakAngle(double imsaakAng) {
+    public Method setImsaakAngle(double imsaakAng) {
         this.imsaakAng = imsaakAng;
+        return this;
     }
 
     public int getFajrShurooqMinutes() {
         return fajrInv;
     }
 
-    public void setFajrShurooqMinutes(int fajrInv) {
+    public Method setFajrShurooqMinutes(int fajrInv) {
         this.fajrInv = fajrInv;
+        return this;
     }
 
     public int getIshaaMaghribMinutes() {
         return ishaaInv;
     }
 
-    public void setIshaaMaghribMinutes(int ishaaInv) {
+    public Method setIshaaMaghribMinutes(int ishaaInv) {
         this.ishaaInv = ishaaInv;
+        return this;
     }
 
     public int getImsaakFajrMinutes() {
         return imsaakInv;
     }
 
-    public void setImsaakFajrMinutes(int imsaakInv) {
+    public Method setImsaakFajrMinutes(int imsaakInv) {
         this.imsaakInv = imsaakInv;
+        return this;
     }
 
     public Rounding getRounding() {
         return round;
     }
 
-    public void setRounding(Rounding round) {
+    public Method setRounding(Rounding round) {
         this.round = round;
+        return this;
     }
 
     public Mathhab getMathhab() {
         return mathhab;
     }
 
-    public void setMathhab(Mathhab mathhab) {
+    public Method setMathhab(Mathhab mathhab) {
         this.mathhab = mathhab;
+        return this;
     }
 
     public double getNearestLatitude() {
         return nearestLat;
     }
 
-    public void setNearestLatitude(double nearestLat) {
+    public Method setNearestLatitude(double nearestLat) {
         this.nearestLat = nearestLat;
+        return this;
     }
 
     public ExtremeMethod getExtremeMethod() {
         return extreme;
     }
 
-    public void setExtremeMethod(ExtremeMethod extreme) {
+    public Method setExtremeMethod(ExtremeMethod extreme) {
         this.extreme = extreme;
+        return this;
     }
 
     public double getExtremeLatitude() {
         return extremeLat;
     }
 
-    public void setExtremeLatitude(double extremeLat) {
+    public Method setExtremeLatitude(double extremeLat) {
         this.extremeLat = extremeLat;
+        return this;
     }
 
     public boolean isUseOffset() {
         return offset != 0;
     }
 
-    public void setUseOffset(boolean offset) {
+    public Method setUseOffset(boolean offset) {
         this.offset = offset ? 1 : 0;
+        return this;
     }
 
     public double[] getOffsetMinutes() {
         return offList;
     }
 
-    public void setOffsetMinutes(double[] offList) {
+    public Method setOffsetMinutes(double[] offList) {
         this.offList = offList;
+        return this;
     }
 }
