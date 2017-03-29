@@ -66,8 +66,8 @@ public class Prayer {
         this.date.day = calendar.get(Calendar.DAY_OF_MONTH);
         this.date.month = calendar.get(Calendar.MONTH) + 1;
         this.date.year = calendar.get(Calendar.YEAR);
-        this.location.gmtDiff = calendar.get(Calendar.ZONE_OFFSET) / (1000 * 60 * 60);
-        this.location.dst = calendar.get(Calendar.DST_OFFSET) / (1000 * 60 * 60);
+        this.location.gmtDiff = calendar.get(Calendar.ZONE_OFFSET) / (1000d * 60 * 60);
+        this.location.dst = Math.round(calendar.get(Calendar.DST_OFFSET) / (1000f * 60 * 60));
 
         result = null;
         return this;
