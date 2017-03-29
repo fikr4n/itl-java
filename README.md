@@ -71,7 +71,7 @@ Examples below will show how simple using this library. Longer example is availa
     System.out.println(date.format("EEE, d MMM yyyy G"));
 ```
 
-```
+```java
     // Initialize
     UmmAlqura calculator = new UmmAlqura(null);
     ConvertedDate date;
