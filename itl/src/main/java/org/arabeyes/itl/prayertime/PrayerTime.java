@@ -35,4 +35,12 @@ public class PrayerTime {
     public boolean isExtreme() {
         return isExtreme != 0;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%02d:%02d:%02d%s", hour, minute, second, isExtreme != 0 ?
+                " (extreme)" : "");
+    }
+
+    // TODO: 2017-03-29 format(String) or toDate()
 }

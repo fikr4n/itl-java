@@ -39,6 +39,7 @@ public class Dms {
         return PrayerModule.dms2Decimal(deg, min, sec, ' ');
     }
 
+    @Override
     public String toString() {
         String sign = "";
         if (deg < 0 || min < 0 || sec < 0.0)
