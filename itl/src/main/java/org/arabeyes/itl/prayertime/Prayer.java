@@ -1,35 +1,35 @@
 package org.arabeyes.itl.prayertime;
 
 import org.arabeyes.itl.prayertime.PrayerModule.Location;
-import org.arabeyes.itl.prayertime.PrayerModule.SimpleDate;
+import org.arabeyes.itl.prayertime.PrayerModule.SDate;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
-public class PrayerTimeCalc {
+public class Prayer {
 
     private static final Method[] METHODS_CACHE = new Method[StandardMethod.values().length];
 
     private final Location location;
     private Method method;
-    private SimpleDate date;
+    private SDate date;
     private PrayerTime[] result;
 
-    public PrayerTimeCalc() {
+    public Prayer() {
         this.location = new Location();
         this.location.degreeLat = Double.NaN;
     }
 
-    public PrayerTimeCalc setMethod(Method method) {
+    public Prayer setMethod(Method method) {
         this.method = method;
 
         this.result = null;
         return this;
     }
 
-    public PrayerTimeCalc setMethod(StandardMethod method) {
+    public Prayer setMethod(StandardMethod method) {
         Method m = METHODS_CACHE[method.ordinal()];
         if (m == null) {
             m = Method.fromStandard(method);
@@ -38,7 +38,7 @@ public class PrayerTimeCalc {
         return setMethod(m);
     }
 
-    public PrayerTimeCalc setLocation(double lat, double lon, double seaLevel) {
+    public Prayer setLocation(double lat, double lon, double seaLevel) {
         this.location.degreeLat = lat;
         this.location.degreeLong = lon;
         this.location.seaLevel = seaLevel;
@@ -47,22 +47,22 @@ public class PrayerTimeCalc {
         return this;
     }
 
-    public PrayerTimeCalc setPressure(double pressure) {
+    public Prayer setPressure(double pressure) {
         this.location.pressure = pressure;
 
         this.result = null;
         return this;
     }
 
-    public PrayerTimeCalc setTemperature(double temperature) {
+    public Prayer setTemperature(double temperature) {
         this.location.temperature = temperature;
 
         this.result = null;
         return this;
     }
 
-    public PrayerTimeCalc setDate(GregorianCalendar calendar) {
-        this.date = new SimpleDate();
+    public Prayer setDate(GregorianCalendar calendar) {
+        this.date = new SDate();
         this.date.day = calendar.get(Calendar.DAY_OF_MONTH);
         this.date.month = calendar.get(Calendar.MONTH) + 1;
         this.date.year = calendar.get(Calendar.YEAR);
@@ -73,7 +73,7 @@ public class PrayerTimeCalc {
         return this;
     }
 
-    public PrayerTimeCalc setDate(Date date, TimeZone timeZone) {
+    public Prayer setDate(Date date, TimeZone timeZone) {
         GregorianCalendar calendar = new GregorianCalendar(timeZone);
         calendar.setTime(date);
         return setDate(calendar);

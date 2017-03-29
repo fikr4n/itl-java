@@ -92,37 +92,22 @@ public class ConvertedDate {
         return date.to_numdays;
     }
 
-    /**
-     * Short cut for {@link HijriNames}.
-     */
     public String getDayOfWeekName() {
         return names.get(date.to_dname);
     }
 
-    /**
-     * Short cut for {@link HijriNames}.
-     */
     public String getDayOfWeekShortName() {
         return names.get(date.to_dname_sh);
     }
 
-    /**
-     * Short cut for {@link HijriNames}.
-     */
     public String getMonthName() {
         return names.get(date.to_mname);
     }
 
-    /**
-     * Short cut for {@link HijriNames}.
-     */
     public String getMonthShortName() {
         return names.get(date.to_mname_sh);
     }
 
-    /**
-     * Short cut for {@link HijriNames}.
-     */
     public String getEraName() {
         return names.get(date.units);
     }

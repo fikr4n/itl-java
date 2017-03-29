@@ -12,7 +12,7 @@
 package org.arabeyes.itl.prayertime;
 
 import org.arabeyes.itl.prayertime.PrayerModule.Location;
-import org.arabeyes.itl.prayertime.PrayerModule.SimpleDate;
+import org.arabeyes.itl.prayertime.PrayerModule.SDate;
 
 import static java.lang.Math.acos;
 import static java.lang.Math.asin;
@@ -245,7 +245,7 @@ class AstroModule {
     /**
      * Returns the astronomical Julian day (for local time with delta-t)
      */
-    static double getJulianDay(SimpleDate date, double gmt) {
+    static double getJulianDay(SDate date, double gmt) {
         double jdB = 0, jdY, jdM, JD;
 
         jdY = date.year;

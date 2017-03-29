@@ -15,6 +15,7 @@ import static java.lang.Math.abs;
 import static java.lang.Math.floor;
 
 class HijriModule {
+    // Compatible with ITL 59bd87234aa87712a92b3fffb5497a43f121abf2
 
     /**
      * User-viewable Date structure

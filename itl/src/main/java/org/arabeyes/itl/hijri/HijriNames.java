@@ -7,7 +7,7 @@ final class HijriNames {
 
     private ResourceBundle res;
 
-    public HijriNames(Locale locale) {
+    HijriNames(Locale locale) {
         if (locale == null)
             locale = Locale.getDefault();
 

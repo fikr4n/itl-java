@@ -31,15 +31,15 @@ class PrayerModule {
     // Compatible with ITL 59bd87234aa87712a92b3fffb5497a43f121abf2
 
     /* This holds the current date info. */
-    static class SimpleDate {
+    static class SDate {
         int day;
         int month;
         int year;
 
-        SimpleDate() {
+        SDate() {
         }
 
-        SimpleDate(SimpleDate src) {
+        SDate(SDate src) {
             this.day = src.day;
             this.month = src.month;
             this.year = src.year;
@@ -104,7 +104,7 @@ class PrayerModule {
      * - ... and so on until...
      * - Prayer[5].minute    is today's Ishaa minutes
      */
-    static PrayerTime[] getPrayerTimes(Location loc, Method conf, SimpleDate date) {
+    static PrayerTime[] getPrayerTimes(Location loc, Method conf, SDate date) {
         PrayerTime[] pt = new PrayerTime[6];
         for (int i = 0; i < pt.length; ++i)
             pt[i] = new PrayerTime();
@@ -549,7 +549,7 @@ class PrayerModule {
         pt.second = (int) sec;
     }
 
-    static PrayerTime getImsaak(Location loc, Method conf, SimpleDate date) {
+    static PrayerTime getImsaak(Location loc, Method conf, SDate date) {
 
         Method tmpConf;
         final PrayerTime[] temp = new PrayerTime[6];
@@ -594,16 +594,16 @@ class PrayerModule {
 
     }
 
-    private static PrayerTime getNextDayImsaak(Location loc, Method conf, SimpleDate date) {
+    private static PrayerTime getNextDayImsaak(Location loc, Method conf, SDate date) {
         /* Copy the date structure and increment for next day.*/
-        SimpleDate tempd = new SimpleDate(date);
+        SDate tempd = new SDate(date);
         tempd.day++;
 
         return getImsaak(loc, conf, tempd);
 
     }
 
-    static PrayerTime getNextDayFajr(Location loc, Method conf, SimpleDate date) {
+    static PrayerTime getNextDayFajr(Location loc, Method conf, SDate date) {
         PrayerTime[] temp = new PrayerTime[6];
         for (int i = 0; i < temp.length; ++i)
             temp[i] = new PrayerTime();
@@ -777,7 +777,7 @@ class PrayerModule {
         double julianDay;
     }
 
-    private static DayInfo getDayInfo(SimpleDate date, double gmt) {
+    private static DayInfo getDayInfo(SDate date, double gmt) {
         int ld;
         int dy;
         double jd;
