@@ -24,11 +24,66 @@ Examples below will show how simple using this library. Longer example is availa
 
 ### Prayer time and qibla direction ###
 
-// TODO
+```java
+    // Initialize
+    Prayer calculator = new Prayer()
+            .setMethod(StandardMethod.EGYPT_SURVEY) // Egyptian General Authority of Survey
+            .setLocation(-6.37812775, 106.8342445, 0) // lat, lng, height AMSL
+            .setPressure(1010)
+            .setTemperature(10)
+            .setDate(new Date(), TimeZone.getDefault()); // today, here
+    TimeNames names = TimeNames.getInstance(null); // equivalent to Locale.getDefault()
+
+    // Calculate prayer times
+    for (Map.Entry<TimeType, PrayerTime> time : calculator.getPrayerTimes().entrySet()) {
+        System.out.printf("%s %s\n",
+                names.get(time.getKey()), // prayer name
+                time.getValue()); // prayer time
+    }
+    // or
+    for (PrayerTime time : calculator.getPrayerTimeArray()) {
+        System.out.println(time);
+    }
+
+    // Calculate qibla direction
+    System.out.println("Qibla: " + calculator.getNorthQibla());
+```
 
 ### Hijri and Umm Al-Qura date ###
 
-// TODO
+```java
+    // Initialize
+    Hijri calculator = new Hijri(null); // equivalent to Locale.getDefault()
+    ConvertedDate date;
+
+    // Gregorian to Hijri
+    date = calculator.hDate(2016, 12, 2); // or hDate(new Date());
+    System.out.println(date.format("EEEE, d MMMM yyyy G")); // converted date
+    System.out.println(date.formatSource("EEE, dd-MM-yy")); // source (before converted)
+    System.out.printf("%s-%s-%s\n",
+            date.getDayOfMonth(),
+            date.getMonth(),
+            date.getYear());
+    System.out.println(date.toDate());
+
+    // Hijri to Gregorian
+    date = calculator.gDate(1438, 9, 1);
+    System.out.println(date.format("EEE, d MMM yyyy G"));
+```
+
+```
+    // Initialize
+    UmmAlqura calculator = new UmmAlqura(null);
+    ConvertedDate date;
+
+    // Gregorian to Hijri
+    date = calculator.g2h(2016, 12, 2);
+    System.out.println(date.format("EEEE, d MMMM yyyy"));
+
+    // Hijri to Gregorian
+    date = calculator.h2g(1438, 9, 1);
+    System.out.println(date.format("EEE, d MMM yyyy"));
+```
 
 ## Prayer times calculation methods ##
 
@@ -65,3 +120,11 @@ to use one of these built-in methods.
   `org.arabeyes.itl.prayertime.PrayerModule` and `org.arabeyes.itl.prayertime.Prayer`
 - `prayertime/prayer.h/Prayer` &rarr;
   `org.arabeyes.itl.prayertime.PrayerTime`
+- `prayertime/prayer.h/Method` &rarr;
+  `org.arabeyes.itl.prayertime.Method`
+- `prayertime/prayer.c/methods` &rarr;
+  `org.arabeyes.itl.prayertime.StandardMethod`
+- `prayertime/prayer.c/exmethods` &rarr;
+  `org.arabeyes.itl.prayertime.ExtremeMethod`
+- `prayertime/prayer.c/salatType` &rarr;
+  `org.arabeyes.itl.prayertime.TimeType`
