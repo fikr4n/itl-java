@@ -88,6 +88,8 @@ public class ConvertedDate {
             } else if (c == 'y') {
                 String s = Integer.toString(getSourceYear());
                 result.append(count == 2 && s.length() > 2 ? s.substring(s.length() - 2) : s);
+            } else //noinspection StatementWithEmptyBody
+                if (c == 'G') { // not available
             } else if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
                 throw new IllegalArgumentException("Illegal pattern character '" + c + "'");
             } else {
@@ -100,9 +102,9 @@ public class ConvertedDate {
 
     public Date toDate() {
         if (type == TYPE_GREGORIAN) {
-            return new GregorianCalendar(date.year, date.month, date.day).getTime();
+            return new GregorianCalendar(date.year, date.month - 1, date.day).getTime();
         } else {
-            return new GregorianCalendar(sourceYear, sourceMonth, sourceDay).getTime();
+            return new GregorianCalendar(sourceYear, sourceMonth - 1, sourceDay).getTime();
         }
     }
 
@@ -160,7 +162,7 @@ public class ConvertedDate {
     }
 
     public String getEraName() {
-        return names.get(date.units);
+        return date.units == null ? "" : names.get(date.units);
     }
 
     // Extra accessor for target
