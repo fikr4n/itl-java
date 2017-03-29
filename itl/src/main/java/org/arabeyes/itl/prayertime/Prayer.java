@@ -6,6 +6,7 @@ import org.arabeyes.itl.prayertime.PrayerModule.SDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.LinkedHashMap;
 import java.util.TimeZone;
 
 public class Prayer {
@@ -15,7 +16,6 @@ public class Prayer {
     private final Location location;
     private Method method;
     private SDate date;
-    private PrayerTime[] result;
 
     public Prayer() {
         this.location = new Location();
@@ -25,7 +25,6 @@ public class Prayer {
     public Prayer setMethod(Method method) {
         this.method = method;
 
-        this.result = null;
         return this;
     }
 
@@ -43,21 +42,18 @@ public class Prayer {
         this.location.degreeLong = lon;
         this.location.seaLevel = seaLevel;
 
-        this.result = null;
         return this;
     }
 
     public Prayer setPressure(double pressure) {
         this.location.pressure = pressure;
 
-        this.result = null;
         return this;
     }
 
     public Prayer setTemperature(double temperature) {
         this.location.temperature = temperature;
 
-        this.result = null;
         return this;
     }
 
@@ -69,7 +65,6 @@ public class Prayer {
         this.location.gmtDiff = calendar.get(Calendar.ZONE_OFFSET) / (1000d * 60 * 60);
         this.location.dst = Math.round(calendar.get(Calendar.DST_OFFSET) / (1000f * 60 * 60));
 
-        result = null;
         return this;
     }
 
@@ -79,25 +74,42 @@ public class Prayer {
         return setDate(calendar);
     }
 
-    public PrayerTime getTime(TimeType type) {
+    private void checkConfig() {
         if (method == null || date == null || Double.isNaN(location.degreeLat))
             throw new IllegalStateException("Method, location, or date is not set");
-
-        if (type == TimeType.IMSAAK) {
-            return PrayerModule.getImsaak(location, method, date);
-        } else if (type == TimeType.NEXTFAJR) {
-            return PrayerModule.getNextDayFajr(location, method, date);
-        } else {
-            PrayerTime[] times = this.result;
-            if (times == null) {
-                times = PrayerModule.getPrayerTimes(location, method, date);
-                this.result = times;
-            }
-            return times[type.ordinal()];
-        }
     }
 
-    public Dms getQibla() {
+    public PrayerTime[] getPrayerTimeArray() {
+        checkConfig();
+        return PrayerModule.getPrayerTimes(location, method, date);
+    }
+
+    public LinkedHashMap<TimeType, PrayerTime> getPrayerTimes() {
+        PrayerTime[] array = getPrayerTimeArray();
+        LinkedHashMap<TimeType, PrayerTime> result = new LinkedHashMap<TimeType, PrayerTime>(6);
+        TimeType[] types = TimeType.values();
+        for (int i = 0; i < 6; ++i) {
+            result.put(types[i], array[i]);
+        }
+        return result;
+    }
+
+    public PrayerTime getImsaak() {
+        checkConfig();
+        return PrayerModule.getImsaak(location, method, date);
+    }
+
+    public PrayerTime getNextDayFajr() {
+        checkConfig();
+        return PrayerModule.getNextDayFajr(location, method, date);
+    }
+
+    public PrayerTime getNextDayImsaak() {
+        checkConfig();
+        return PrayerModule.getNextDayImsaak(location, method, date);
+    }
+
+    public Dms getNorthQibla() {
         if (Double.isNaN(this.location.degreeLat))
             throw new IllegalStateException("Location is not set");
 

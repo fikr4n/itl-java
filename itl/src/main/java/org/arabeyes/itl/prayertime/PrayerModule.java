@@ -594,7 +594,7 @@ class PrayerModule {
 
     }
 
-    private static PrayerTime getNextDayImsaak(Location loc, Method conf, SDate date) {
+    static PrayerTime getNextDayImsaak(Location loc, Method conf, SDate date) {
         /* Copy the date structure and increment for next day.*/
         SDate tempd = new SDate(date);
         tempd.day++;
