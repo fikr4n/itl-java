@@ -22,7 +22,7 @@ _For more flexible license please see [ICLib](https://github.com/fikr4n/iclib-ja
 Examples below will show how simple using this library. Longer example is available in
 [`Example.java`](app/src/main/java/example/Example.java)
 
-### Prayer time and qibla direction ###
+**1. Prayer times and qibla direction**
 
 ```java
     // Initialize
@@ -49,7 +49,7 @@ Examples below will show how simple using this library. Longer example is availa
     System.out.println("Qibla: " + calculator.getNorthQibla());
 ```
 
-### Hijri and Umm Al-Qura date ###
+**2. Hijri date**
 
 ```java
     // Initialize
@@ -70,6 +70,8 @@ Examples below will show how simple using this library. Longer example is availa
     date = calculator.gDate(1438, 9, 1);
     System.out.println(date.format("EEE, d MMM yyyy G"));
 ```
+
+**3. Umm Al-Qura date**
 
 ```java
     // Initialize
@@ -107,6 +109,8 @@ to use one of these built-in methods.
 - **Morocco Awqaf, Morocco**
 
 ## Porting notes ##
+
+Some differences between the original C and this Java version:
 
 - `hijri/hijri.h` and `hijri/hijri.c` &rarr;
   `org.arabeyes.itl.hijri.HijriModule` and `org.arabeyes.itl.hijri.Hijri`
