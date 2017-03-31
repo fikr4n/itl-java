@@ -17,6 +17,11 @@ import static java.lang.Math.floor;
 class HijriModule {
     // Compatible with ITL 59bd87234aa87712a92b3fffb5497a43f121abf2
 
+    static final String ERA_BC = "B.C";
+    static final String ERA_AD = "A.D";
+    static final String ERA_BH = "B.H";
+    static final String ERA_AH = "A.H";
+
     /**
      * User-viewable Date structure
      */
@@ -316,7 +321,7 @@ class HijriModule {
         }
 
         /* Set resulting values */
-        cdate.units = (pre_epoch ? "B.H" : "A.H");
+        cdate.units = (pre_epoch ? ERA_BH : ERA_AH);
         cdate.weekday = (abs(abs_date % 7));
         cdate.frm_numdays = g_numdays(month, year);
         cdate.to_numdays = h_numdays(cdate.month, cdate.year);
@@ -416,7 +421,7 @@ class HijriModule {
         }
 
         /* Set resulting values */
-        cdate.units = (pre_epoch ? "B.C" : "A.D");
+        cdate.units = (pre_epoch ? ERA_BC : ERA_AD);
         cdate.weekday = (abs(abs_date % 7));
         cdate.frm_numdays = h_numdays(month, year);
         cdate.to_numdays = g_numdays(cdate.month, cdate.year);

@@ -14,27 +14,41 @@ public class UmmAlqura {
 
     public ConvertedDate g2h(int year, int month, int day) {
         HijriModule.sDate d = new HijriModule.sDate();
-        int flag = UmmAlquraModule.G2H(d, day, month, year);
+        int flag;
+        try {
+            flag = UmmAlquraModule.G2H(d, day, month, year);
+        } catch (Exception e) {
+            throw new ConversionException(String.format("Error while converting (%d, %d, %d)",
+                    year, month, day), e);
+        }
         if (flag != 1)
-            throw new ConversionException("Failed to convert (flag=" + flag + ")");
+            throw new ConversionException(String.format("Error while converting (%d, %d, %d) (flag=%d)",
+                    year, month, day, flag));
         return new ConvertedDate(d, year, month, day, names, ConvertedDate.TYPE_UMM_ALQURA);
     }
 
     public ConvertedDate g2h(Date date) {
         GregorianCalendar cal = new GregorianCalendar();
         cal.setTime(date);
-        if (cal.get(Calendar.ERA) != GregorianCalendar.AD)
-            throw new IllegalArgumentException("Era other than AD is not supported"); // TODO: 2017-03-28 handle
 
-        return g2h(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1,
-                cal.get(Calendar.DAY_OF_MONTH));
+        int year = cal.get(Calendar.YEAR);
+        if (cal.get(Calendar.ERA) == GregorianCalendar.BC)
+            year = 1 - year;
+        return g2h(year, cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH));
     }
 
     public ConvertedDate h2g(int year, int month, int day) {
         HijriModule.sDate d = new HijriModule.sDate();
-        int flag = UmmAlquraModule.H2G(d, day, month, year);
+        int flag;
+        try {
+            flag = UmmAlquraModule.H2G(d, day, month, year);
+        } catch (Exception e) {
+            throw new ConversionException(String.format("Error while converting (%d, %d, %d)",
+                    year, month, day), e);
+        }
         if (flag != 1)
-            throw new ConversionException("Failed to convert (flag=" + flag + ")");
+            throw new ConversionException(String.format("Error while converting (%d, %d, %d) (flag=%d)",
+                    year, month, day, flag));
         return new ConvertedDate(d, year, month, day, names, ConvertedDate.TYPE_GREGORIAN);
     }
 }

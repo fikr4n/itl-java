@@ -49,7 +49,7 @@ public class ConvertedDate {
                 else
                     result.append(String.format("%0" + count + "d", getMonth()));
             } else if (c == 'y') {
-                String s = Integer.toString(getYear());
+                String s = String.format("%0" + count + "d", getYear());
                 result.append(count == 2 && s.length() > 2 ? s.substring(s.length() - 2) : s);
             } else if (c == 'G') {
                 result.append(getEraName());
@@ -86,7 +86,7 @@ public class ConvertedDate {
                 else
                     result.append(String.format("%0" + count + "d", getSourceMonth()));
             } else if (c == 'y') {
-                String s = Integer.toString(getSourceYear());
+                String s = String.format("%0" + count + "d", getSourceYear());
                 result.append(count == 2 && s.length() > 2 ? s.substring(s.length() - 2) : s);
             } else //noinspection StatementWithEmptyBody
                 if (c == 'G') { // not available
@@ -102,10 +102,18 @@ public class ConvertedDate {
 
     public Date toDate() {
         if (type == TYPE_GREGORIAN) {
-            return new GregorianCalendar(date.year, date.month - 1, date.day).getTime();
+            int year = date.year;
+            if (HijriModule.ERA_BC.equals(date.units) && year != 0)
+                year = 1 - date.year;
+            return new GregorianCalendar(year, date.month - 1, date.day).getTime();
         } else {
             return new GregorianCalendar(sourceYear, sourceMonth - 1, sourceDay).getTime();
         }
+    }
+
+    @Override
+    public String toString() {
+        return format("EEE dd MMM yyyy G");
     }
 
     // Accessor for target

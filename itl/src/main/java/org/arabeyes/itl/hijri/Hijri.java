@@ -17,9 +17,16 @@ public class Hijri {
      */
     public ConvertedDate hDate(int year, int month, int day) {
         HijriModule.sDate d = new HijriModule.sDate();
-        int error = HijriModule.h_date(d, day, month, year);
+        int error;
+        try {
+            error = HijriModule.h_date(d, day, month, year);
+        } catch (Exception e) {
+            throw new ConversionException(String.format("Error while converting (%d, %d, %d)",
+                    year, month, day), e);
+        }
         if (error != 0)
-            throw new ConversionException("Failed to convert (error=" + error + ")");
+            throw new ConversionException(String.format("Error while converting (%d, %d, %d) (error=%d)",
+                    year, month, day, error));
         return new ConvertedDate(d, year, month, day, names, ConvertedDate.TYPE_HIJRI);
     }
 
@@ -29,11 +36,11 @@ public class Hijri {
     public ConvertedDate hDate(Date date) {
         GregorianCalendar cal = new GregorianCalendar();
         cal.setTime(date);
-        if (cal.get(Calendar.ERA) != GregorianCalendar.AD) // TODO: 2017-03-28 handle
-            throw new IllegalArgumentException("Era other than AD is not supported");
 
-        return hDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1,
-                cal.get(Calendar.DAY_OF_MONTH));
+        int year = cal.get(Calendar.YEAR);
+        if (cal.get(Calendar.ERA) == GregorianCalendar.BC)
+            year = 1 - year;
+        return hDate(year, cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH));
     }
 
     /**
@@ -41,9 +48,16 @@ public class Hijri {
      */
     public ConvertedDate gDate(int year, int month, int day) {
         HijriModule.sDate d = new HijriModule.sDate();
-        int error = HijriModule.g_date(d, day, month, year);
+        int error;
+        try {
+            error = HijriModule.g_date(d, day, month, year);
+        } catch (Exception e) {
+            throw new ConversionException(String.format("Error while converting (%d, %d, %d)",
+                    year, month, day), e);
+        }
         if (error != 0)
-            throw new ConversionException("Failed to convert (error=" + error + ")");
+            throw new ConversionException(String.format("Error while converting (%d, %d, %d) (error=%d)",
+                    year, month, day, error));
         return new ConvertedDate(d, year, month, day, names, ConvertedDate.TYPE_GREGORIAN);
     }
 }
