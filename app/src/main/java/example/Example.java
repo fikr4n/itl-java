@@ -40,9 +40,9 @@ public class Example {
         // or
         calculator.hDate(new Date());
         // Print
-        System.out.println(date.format("EEEE, d MMMM yyyy G"));
-        System.out.println(date.format("EEE, d MMM yyyy G"));
-        System.out.println(date.format("EEE, dd-MM-yy G"));
+        System.out.println(date.format("EEEE, d MMMM yyyy G ('long')"));
+        System.out.println(date.format("EEE, d MMM yyyy G '''''''MMMedium'"));
+        System.out.println(date.format("EEE, dd-MM-yy G '''short'''"));
         System.out.println(date.formatSource("EEEE, d MMMM yyyy"));
         System.out.println(date.formatSource("EEE, d MMM yyyy"));
         System.out.println(date.formatSource("EEE, dd-MM-yy"));

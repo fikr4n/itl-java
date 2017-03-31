@@ -27,45 +27,17 @@ public class ConvertedDate {
     }
 
     public String format(String f) {
-        StringBuilder result = new StringBuilder();
-        int count = 0;
-        for (int i = 0, last = f.length() - 1; i <= last; ++i) {
-            char c = f.charAt(i);
-            if (i > 0 && c == f.charAt(i - 1))
-                count++;
-            else
-                count = 1;
-
-            if (i != last && c == f.charAt(i + 1))
-                continue;
-
-            if (c == 'E') {
-                result.append(count >= 4 ? getDayOfWeekName() : getDayOfWeekShortName());
-            } else if (c == 'd') {
-                result.append(String.format("%0" + count + "d", getDayOfMonth()));
-            } else if (c == 'M') {
-                if (count >= 3)
-                    result.append(count >= 4 ? getMonthName() : getMonthShortName());
-                else
-                    result.append(String.format("%0" + count + "d", getMonth()));
-            } else if (c == 'y') {
-                String s = String.format("%0" + count + "d", getYear());
-                result.append(count == 2 && s.length() > 2 ? s.substring(s.length() - 2) : s);
-            } else if (c == 'G') {
-                result.append(getEraName());
-            } else if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
-                throw new IllegalArgumentException("Illegal pattern character '" + c + "'");
-            } else {
-                for (int j = 0; j < count; ++j) result.append(c);
-            }
-            // TODO: 2017-03-29 support single-quote and double single-quote
-        }
-        return result.toString();
+        return format(f, this);
     }
 
     public String formatSource(String f) {
+        return format(f, new SourceDate(this));
+    }
+
+    private static String format(String f, ConvertedDate d) {
         StringBuilder result = new StringBuilder();
         int count = 0;
+        boolean inQuote = false;
         for (int i = 0, last = f.length() - 1; i <= last; ++i) {
             char c = f.charAt(i);
             if (i > 0 && c == f.charAt(i - 1))
@@ -73,29 +45,42 @@ public class ConvertedDate {
             else
                 count = 1;
 
+            if (c == '\'') {
+                if (inQuote) {
+                    if (count == 2) result.append(c);
+                    inQuote = false;
+                    count = 0;
+                } else {
+                    inQuote = true;
+                }
+                continue;
+            } else if (inQuote) {
+                result.append(c);
+                continue;
+            }
+
             if (i != last && c == f.charAt(i + 1))
                 continue;
 
             if (c == 'E') {
-                result.append(count >= 4 ? getSourceDayOfWeekName() : getSourceDayOfWeekShortName());
+                result.append(count >= 4 ? d.getDayOfWeekName() : d.getDayOfWeekShortName());
             } else if (c == 'd') {
-                result.append(String.format("%0" + count + "d", getSourceDayOfMonth()));
+                result.append(String.format("%0" + count + "d", d.getDayOfMonth()));
             } else if (c == 'M') {
                 if (count >= 3)
-                    result.append(count >= 4 ? getSourceMonthName() : getSourceMonthShortName());
+                    result.append(count >= 4 ? d.getMonthName() : d.getMonthShortName());
                 else
-                    result.append(String.format("%0" + count + "d", getSourceMonth()));
+                    result.append(String.format("%0" + count + "d", d.getMonth()));
             } else if (c == 'y') {
-                String s = String.format("%0" + count + "d", getSourceYear());
+                String s = String.format("%0" + count + "d", d.getYear());
                 result.append(count == 2 && s.length() > 2 ? s.substring(s.length() - 2) : s);
-            } else //noinspection StatementWithEmptyBody
-                if (c == 'G') { // not available
+            } else if (c == 'G') {
+                result.append(d.getEraName());
             } else if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
                 throw new IllegalArgumentException("Illegal pattern character '" + c + "'");
             } else {
                 for (int j = 0; j < count; ++j) result.append(c);
             }
-            // TODO: 2017-03-29 support single-quote and double single-quote
         }
         return result.toString();
     }
@@ -224,4 +209,62 @@ public class ConvertedDate {
 //    public String getSourceEraName() {
 //        throw new UnsupportedOperationException();
 //    }
+
+    /**
+     * Such a hack.
+     */
+    private static class SourceDate extends ConvertedDate {
+
+        SourceDate(ConvertedDate o) {
+            super(o.date, o.sourceYear, o.sourceMonth, o.sourceDay, o.names, o.type);
+        }
+
+        public int getDayOfMonth() {
+            return getSourceDayOfMonth();
+        }
+
+        public int getDayOfWeek() {
+            throw new UnsupportedOperationException();
+        }
+
+        public int getMonth() {
+            return getSourceMonth();
+        }
+
+        public int getYear() {
+            return getSourceYear();
+        }
+
+        public int getMonthLength() {
+            return getSourceMonthLength();
+        }
+
+        public String getDayOfWeekName() {
+            return getSourceDayOfWeekName();
+        }
+
+        public String getDayOfWeekShortName() {
+            return getSourceDayOfWeekShortName();
+        }
+
+        public String getMonthName() {
+            return getSourceMonthName();
+        }
+
+        public String getMonthShortName() {
+            return getSourceMonthShortName();
+        }
+
+        public String getEraName() {
+            return "";
+        }
+
+        public int getNextMonthLength() {
+            throw new UnsupportedOperationException();
+        }
+
+        public String getNextMonthName() {
+            throw new UnsupportedOperationException();
+        }
+    }
 }
