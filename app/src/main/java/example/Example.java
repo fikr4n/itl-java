@@ -20,11 +20,62 @@ import java.util.TimeZone;
 public class Example {
     // TODO: 2017-04-01 javadoc
     // TODO: 2017-04-01 mark exported classes and methods
+    // TODO: 2017-04-01 implement new method algorithm
+    // TODO: 2017-04-01 create unit tests
 
     public static void main(String[] args) {
         showPrayerTime();
         showHijri();
         showUmmAlqura();
+    }
+
+    private static void showPrayerTime() {
+        System.out.println("=== PRAYER TIME ===");
+
+        // Initialize
+        Prayer calculator = new Prayer()
+                .setMethod(StandardMethod.EGYPT_SURVEY) // Egyptian General Authority of Survey
+                .setLocation(-6.37812775, 106.8342445, 0) // lat, lng, height AMSL
+                .setPressure(1010)
+                .setTemperature(10)
+                .setDate(new GregorianCalendar()); // today, here
+        // or
+        calculator.setDate(new Date(), TimeZone.getDefault());
+        // or
+        calculator.setMethod(Method.fromStandard(StandardMethod.EGYPT_NEW)
+                .setUseOffset(true)
+                .setOffsetMinutes(new double[] {
+                        0, // fajr
+                        -0.5, // sunrise -30 sec
+                        2, // zuhr +2 min
+                        0, // assr
+                        0, // maghrib
+                        0, // ishaa
+                }));
+
+        TimeNames names = TimeNames.getInstance(null);
+        // or
+        TimeNames.getInstance(Locale.getDefault());
+
+        // Calculate and print each time
+        for (Map.Entry<TimeType, PrayerTime> time : calculator.getPrayerTimes().entrySet()) {
+            System.out.printf("%s\t%02d:%02d\n",
+                    names.get(time.getKey()),
+                    time.getValue().getHour(),
+                    time.getValue().getMinute());
+        }
+        // or
+        for (PrayerTime time : calculator.getPrayerTimeArray()) {
+            System.out.println(time);
+        }
+        System.out.printf("%s:\t%s\n", names.get(TimeType.IMSAAK), calculator.getImsaak());
+        System.out.printf("%s:\t%s\n", names.get(TimeType.NEXTFAJR), calculator.getNextDayFajr());
+        System.out.println("Tomorrow Imsaak: " + calculator.getNextDayImsaak());
+
+        // Calculate and print qibla direction
+        Dms qibla = calculator.getNorthQibla();
+        System.out.println("Qibla: " + qibla);
+        System.out.println("Qibla: " + qibla.toDecimal());
     }
     
     private static void showHijri() {
@@ -115,54 +166,5 @@ public class Example {
         System.out.println(date.formatSource("EEE, d MMM yyyy"));
         System.out.println(date.formatSource("EEE, dd-MM-yy"));
         System.out.println(date.toDate());
-    }
-    
-    private static void showPrayerTime() {
-        System.out.println("=== PRAYER TIME ===");
-
-        // Initialize
-        Prayer calculator = new Prayer()
-                .setMethod(StandardMethod.EGYPT_SURVEY) // Egyptian General Authority of Survey
-                .setLocation(-6.37812775, 106.8342445, 0) // lat, lng, height AMSL
-                .setPressure(1010)
-                .setTemperature(10)
-                .setDate(new GregorianCalendar()); // today, here
-        // or
-        calculator.setDate(new Date(), TimeZone.getDefault());
-        // or
-        calculator.setMethod(Method.fromStandard(StandardMethod.EGYPT_NEW)
-                .setUseOffset(true)
-                .setOffsetMinutes(new double[] {
-                        0, // fajr
-                        -0.5, // sunrise -30 sec
-                        2, // zuhr +2 min
-                        0, // assr
-                        0, // maghrib
-                        0, // ishaa
-                }));
-
-        TimeNames names = TimeNames.getInstance(null);
-        // or
-        TimeNames.getInstance(Locale.getDefault());
-
-        // Calculate and print each time
-        for (Map.Entry<TimeType, PrayerTime> time : calculator.getPrayerTimes().entrySet()) {
-            System.out.printf("%s\t%02d:%02d\n",
-                    names.get(time.getKey()),
-                    time.getValue().getHour(),
-                    time.getValue().getMinute());
-        }
-        // or
-        for (PrayerTime time : calculator.getPrayerTimeArray()) {
-            System.out.println(time);
-        }
-        System.out.printf("%s:\t%s\n", names.get(TimeType.IMSAAK), calculator.getImsaak());
-        System.out.printf("%s:\t%s\n", names.get(TimeType.NEXTFAJR), calculator.getNextDayFajr());
-        System.out.println("Tomorrow Imsaak: " + calculator.getNextDayImsaak());
-
-        // Calculate and print qibla direction
-        Dms qibla = calculator.getNorthQibla();
-        System.out.println("Qibla: " + qibla);
-        System.out.println("Qibla: " + qibla.toDecimal());
     }
 }
