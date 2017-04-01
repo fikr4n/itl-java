@@ -44,6 +44,27 @@ class HijriModule {
         String to_dname_sh;	/* Converting to   - Name of day   in short format */
         String to_mname_sh;	/* Converting to   - Name of month in short format */
         String[] event;	/* Important event pertaining to date at hand */
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            sDate that = (sDate) o;
+            return day == that.day && month == that.month && year == that.year &&
+                    weekday == that.weekday &&
+                    (units != null ? units.equals(that.units) : that.units == null);
+        }
+
+        @Override
+        public int hashCode() {
+            int result = day;
+            result = 31 * result + month;
+            result = 31 * result + year;
+            result = 31 * result + weekday;
+            result = 31 * result + (units != null ? units.hashCode() : 0);
+            return result;
+        }
     }
 
     /**

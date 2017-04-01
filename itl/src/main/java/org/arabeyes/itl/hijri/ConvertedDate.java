@@ -236,6 +236,24 @@ public class ConvertedDate {
 //        throw new UnsupportedOperationException();
 //    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ConvertedDate that = (ConvertedDate) o;
+        return type == that.type && date.equals(that.date);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = date.hashCode();
+        result = 31 * result + type;
+        return result;
+    }
+
+    // Inner type
+
     private class TargetFormat implements Formatter.Mapper {
 
         @Override

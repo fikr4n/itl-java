@@ -77,4 +77,22 @@ public class Dms {
                 secFormat.getPositiveSuffix();
         return pre + abs(deg) + '°' + abs(min) + '′' + secFormat.format(abs(sec)) + '″' + post;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Dms dms = (Dms) o;
+        return deg == dms.deg && min == dms.min && Double.compare(dms.sec, sec) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = deg;
+        result = 31 * result + min;
+        long temp = Double.doubleToLongBits(sec);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
 }

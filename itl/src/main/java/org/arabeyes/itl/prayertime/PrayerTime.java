@@ -109,4 +109,23 @@ public class PrayerTime implements Formatter.Mapper {
                 return null;
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PrayerTime that = (PrayerTime) o;
+        return hour == that.hour && minute == that.minute && second == that.second &&
+                isExtreme == that.isExtreme;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = hour;
+        result = 31 * result + minute;
+        result = 31 * result + second;
+        result = 31 * result + (int) isExtreme;
+        return result;
+    }
 }
