@@ -1,3 +1,6 @@
+/* Copyright (c) 2017, Fikrul Arif
+ * (under LGPL license - see COPYING file)
+ */
 package org.arabeyes.itl.hijri;
 
 import java.util.Calendar;
@@ -8,10 +11,21 @@ import java.util.Locale;
 public class UmmAlqura {
     private final HijriNames names;
 
+    /**
+     * @param locale locale information used for name (e.g. month and day names), if null then the
+     *               default is used
+     */
     public UmmAlqura(Locale locale) {
         this.names = new HijriNames(locale);
     }
 
+    /**
+     * Convert Gregorian to Hijri.
+     *
+     * @param day   day of month, starts from 1
+     * @param month starts from 1 for January instead of 0
+     * @param year  negative for before epoch, e.g. -1 for 1 BC
+     */
     public ConvertedDate g2h(int year, int month, int day) {
         HijriModule.sDate d = new HijriModule.sDate();
         int flag;
@@ -27,6 +41,9 @@ public class UmmAlqura {
         return new ConvertedDate(d, year, month, day, names, ConvertedDate.TYPE_UMM_ALQURA);
     }
 
+    /**
+     * Convert Gregorian to Hijri.
+     */
     public ConvertedDate g2h(Date date) {
         GregorianCalendar cal = new GregorianCalendar();
         cal.setTime(date);
@@ -37,6 +54,13 @@ public class UmmAlqura {
         return g2h(year, cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH));
     }
 
+    /**
+     * Convert Hijri to Gregorian.
+     *
+     * @param day   day of month, starts from 1
+     * @param month starts from 1 for Muharram instead of 0
+     * @param year  negative for before epoch, e.g. -1 for 1 BH
+     */
     public ConvertedDate h2g(int year, int month, int day) {
         HijriModule.sDate d = new HijriModule.sDate();
         int flag;

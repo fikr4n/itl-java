@@ -29,7 +29,7 @@ import static org.arabeyes.itl.hijri.HijriModule.h_day_short;
 import static org.arabeyes.itl.hijri.HijriModule.h_month;
 import static org.arabeyes.itl.hijri.HijriModule.h_month_short;
 
-public class UmmAlquraModule {
+class UmmAlquraModule {
 
     private static final int HStartYear = 1420;
     private static final int HEndYear = 1450;

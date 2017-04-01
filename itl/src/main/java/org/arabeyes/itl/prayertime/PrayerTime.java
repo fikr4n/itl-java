@@ -1,3 +1,6 @@
+/*  Copyright (c) 2003-2006, 2009-2010 Arabeyes, Thamer Mahmoud, Fikrul Arif
+ * (www.arabeyes.org - under LGPL license - see COPYING file)
+ */
 package org.arabeyes.itl.prayertime;
 
 /**
@@ -32,10 +35,20 @@ public class PrayerTime {
         return second;
     }
 
+    /**
+     * Whether this particular prayer time has been calculated
+     * through extreme latitude methods and NOT by
+     * conventional means of calculation.
+     *
+     * @return true if extreme latitude methods is used
+     */
     public boolean isExtreme() {
         return isExtreme != 0;
     }
 
+    /**
+     * Returns string representation of this time in "HH:mm:ss [(extreme)]" format.
+     */
     @Override
     public String toString() {
         return String.format("%02d:%02d:%02d%s", hour, minute, second, isExtreme != 0 ?

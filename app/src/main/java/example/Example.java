@@ -18,7 +18,6 @@ import java.util.Map;
 import java.util.TimeZone;
 
 public class Example {
-    // TODO: 2017-04-01 javadoc
     // TODO: 2017-04-01 mark exported classes and methods
     // TODO: 2017-04-01 implement new method algorithm
     // TODO: 2017-04-01 create unit tests

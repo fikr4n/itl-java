@@ -1,8 +1,14 @@
+/* Copyright (c) 2017, Fikrul Arif
+ * (under LGPL license - see COPYING file)
+ */
 package org.arabeyes.itl.prayertime;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * This class is used for getting time names.
+ */
 public class TimeNames {
 
     private static TimeNames instance;
@@ -10,6 +16,9 @@ public class TimeNames {
     private ResourceBundle res;
     private Locale locale;
 
+    /**
+     * @param locale if null then the default locale is used
+     */
     public TimeNames(Locale locale) {
         if (locale == null)
             locale = Locale.getDefault();
@@ -26,6 +35,10 @@ public class TimeNames {
         return res.getString(type.name());
     }
 
+    /**
+     * Get cached instance. This class caches only one last locale used. If locale argument is
+     * different with the last, new instance will be created and cached.
+     */
     public static TimeNames getInstance(Locale locale) {
         if (locale == null)
             locale = Locale.getDefault();

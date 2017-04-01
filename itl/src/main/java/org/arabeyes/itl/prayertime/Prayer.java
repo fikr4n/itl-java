@@ -1,3 +1,6 @@
+/* Copyright (c) 2017, Fikrul Arif
+ * (under LGPL license - see COPYING file)
+ */
 package org.arabeyes.itl.prayertime;
 
 import org.arabeyes.itl.prayertime.PrayerModule.Location;
@@ -22,12 +25,20 @@ public class Prayer {
         this.location.degreeLat = Double.NaN;
     }
 
+    /**
+     * @return self, for chaining
+     */
     public Prayer setMethod(Method method) {
         this.method = method;
 
         return this;
     }
 
+    /**
+     * Call this if using standard method without any modification.
+     *
+     * @return self, for chaining
+     */
     public Prayer setMethod(StandardMethod method) {
         Method m = METHODS_CACHE[method.ordinal()];
         if (m == null) {
@@ -37,6 +48,12 @@ public class Prayer {
         return setMethod(m);
     }
 
+    /**
+     * @param lat      latitude in decimal degrees
+     * @param lon      longitude in decimal degrees
+     * @param seaLevel height (altitude/elevation) above sea level in meters
+     * @return self, for chaining
+     */
     public Prayer setLocation(double lat, double lon, double seaLevel) {
         this.location.degreeLat = lat;
         this.location.degreeLong = lon;
@@ -45,12 +62,20 @@ public class Prayer {
         return this;
     }
 
+    /**
+     * @param pressure atmospheric pressure in millibars (the astronomical standard value is 1010)
+     * @return self, for chaining
+     */
     public Prayer setPressure(double pressure) {
         this.location.pressure = pressure;
 
         return this;
     }
 
+    /**
+     * @param temperature temperature in celsius degree (the astronomical standard value is 10)
+     * @return self, for chaining
+     */
     public Prayer setTemperature(double temperature) {
         this.location.temperature = temperature;
 
@@ -79,11 +104,20 @@ public class Prayer {
             throw new IllegalStateException("Method, location, or date is not set");
     }
 
+    /**
+     * Calculate prayer times and Shurooq (sunrise). Location, date, and method must be set before
+     * calling this method.
+     * @return time of Fajr, Shurooq, Zuhr, Assr, Maghrib, Ishaa respectively
+     */
     public PrayerTime[] getPrayerTimeArray() {
         checkConfig();
         return PrayerModule.getPrayerTimes(location, method, date);
     }
 
+    /**
+     * Calculate prayer times and Shurooq (sunrise).
+     * @return time of Fajr, Shurooq, Zuhr, Assr, Maghrib, Ishaa respectively
+     */
     public LinkedHashMap<TimeType, PrayerTime> getPrayerTimes() {
         PrayerTime[] array = getPrayerTimeArray();
         LinkedHashMap<TimeType, PrayerTime> result = new LinkedHashMap<TimeType, PrayerTime>(6);
@@ -109,6 +143,10 @@ public class Prayer {
         return PrayerModule.getNextDayImsaak(location, method, date);
     }
 
+    /**
+     * Calculate Qibla direction. To call this method, only the location is the prerequisite.
+     * @return degrees from North CCW
+     */
     public Dms getNorthQibla() {
         if (Double.isNaN(this.location.degreeLat))
             throw new IllegalStateException("Location is not set");

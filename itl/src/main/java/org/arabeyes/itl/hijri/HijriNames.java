@@ -1,3 +1,6 @@
+/* Copyright (c) 2017, Fikrul Arif
+ * (under LGPL license - see COPYING file)
+ */
 package org.arabeyes.itl.hijri;
 
 import java.util.Locale;

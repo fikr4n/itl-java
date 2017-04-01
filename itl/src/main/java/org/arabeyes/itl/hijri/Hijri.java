@@ -1,3 +1,6 @@
+/* Copyright (c) 2017, Fikrul Arif
+ * (under LGPL license - see COPYING file)
+ */
 package org.arabeyes.itl.hijri;
 
 import java.util.Calendar;
@@ -8,14 +11,23 @@ import java.util.Locale;
 public class Hijri {
     private final HijriNames names;
 
+    /**
+     * @param locale locale information used for name (e.g. month and day names), if null then the
+     *               default is used
+     */
     public Hijri(Locale locale) {
         this.names = new HijriNames(locale);
     }
 
     /**
-     * Convert to Hijri.
+     * Convert Gregorian to Hijri.
+     *
+     * @param day   day of month, starts from 1
+     * @param month starts from 1 for January instead of 0
+     * @param year  negative for before epoch, e.g. -1 for 1 BC
      */
     public ConvertedDate hDate(int year, int month, int day) {
+        // TODO: 2017-04-01 dmy instead of ymd
         HijriModule.sDate d = new HijriModule.sDate();
         int error;
         try {
@@ -31,7 +43,7 @@ public class Hijri {
     }
 
     /**
-     * Convert to Hijri.
+     * Convert Gregorian to Hijri.
      */
     public ConvertedDate hDate(Date date) {
         GregorianCalendar cal = new GregorianCalendar();
@@ -44,7 +56,11 @@ public class Hijri {
     }
 
     /**
-     * Convert to Gregorian.
+     * Convert Hijri to Gregorian.
+     *
+     * @param day   day of month, starts from 1
+     * @param month starts from 1 for Muharram instead of 0
+     * @param year  negative for before epoch, e.g. -1 for 1 BH
      */
     public ConvertedDate gDate(int year, int month, int day) {
         HijriModule.sDate d = new HijriModule.sDate();

@@ -1,3 +1,6 @@
+/*  Copyright (c) 2003-2006, 2009-2010 Arabeyes, Thamer Mahmoud, Fikrul Arif
+ * (www.arabeyes.org - under LGPL license - see COPYING file)
+ */
 package org.arabeyes.itl.prayertime;
 
 /**
@@ -23,8 +26,8 @@ public class Method {
     double ishaaAng;
 
     /**
-     * The angle difference between Imsaak and Fajr (
-     * default is 1.5)
+     * The angle difference between Imsaak and Fajr
+     * (default is 1.5)
      */
     double imsaakAng = 1.5;
 
@@ -65,8 +68,8 @@ public class Method {
 
     /**
      * Assr prayer shadow assrRatio:
-     * 1: Shaf'i (default)
-     * 2: Hanafi
+     * 1: Shaf'i (default).
+     * 2: Hanafi.
      */
     Mathhab mathhab = Mathhab.SHAFII;
 
@@ -77,8 +80,7 @@ public class Method {
     double nearestLat = 48.5;
 
     /**
-     * Extreme latitude calculation method (see
-     * below)
+     * Extreme latitude calculation method
      */
     ExtremeMethod extreme;
 
