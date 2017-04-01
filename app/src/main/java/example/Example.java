@@ -88,7 +88,7 @@ public class Example {
         ConvertedDate date;
 
         // Gregorian to Hijri
-        date = calculator.hDate(2016, 12, 2);
+        date = calculator.hDate(2, 12, 2016);
         // or
         calculator.hDate(new Date());
         // Print
@@ -119,7 +119,7 @@ public class Example {
         System.out.println("=== FROM HIJRI ===");
 
         // Hijri to Gregorian
-        date = calculator.gDate(1438, 9, 1);
+        date = calculator.gDate(1, 9, 1438);
         // Print
         System.out.println(date.format("EEEE, d MMMM yyyy G"));
         System.out.println(date.format("EEE, d MMM yyyy G"));
@@ -141,7 +141,7 @@ public class Example {
         ConvertedDate date;
 
         // Gregorian to Hijri
-        date = calculator.g2h(2016, 12, 2);
+        date = calculator.g2h(2, 12, 2016);
         // or
         calculator.g2h(new Date());
         // Print
@@ -156,7 +156,7 @@ public class Example {
         System.out.println("=== FROM UMM AL-QURA ===");
 
         // Hijri to Gregorian
-        date = calculator.h2g(1438, 9, 1);
+        date = calculator.h2g(1, 9, 1438);
         // Print
         System.out.println(date.format("EEEE, d MMMM yyyy G"));
         System.out.println(date.format("EEE, d MMM yyyy G"));

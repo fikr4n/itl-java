@@ -57,7 +57,7 @@ Examples below will show how simple using this library. Longer example is availa
     ConvertedDate date;
 
     // Gregorian to Hijri
-    date = calculator.hDate(2016, 12, 2); // or hDate(new Date());
+    date = calculator.hDate(2, 12, 2016); // or hDate(new Date());
     System.out.println(date.format("EEEE, d MMMM yyyy G")); // converted date
     System.out.printf("%s-%s-%s\n", // converted date
             date.getDayOfMonth(),
@@ -67,7 +67,7 @@ Examples below will show how simple using this library. Longer example is availa
     System.out.println(date.toDate());
 
     // Hijri to Gregorian
-    date = calculator.gDate(1438, 9, 1);
+    date = calculator.gDate(1, 9, 1438);
     System.out.println(date.format("EEE, d MMM yyyy G"));
 ```
 
@@ -79,11 +79,11 @@ Examples below will show how simple using this library. Longer example is availa
     ConvertedDate date;
 
     // Gregorian to Hijri
-    date = calculator.g2h(2016, 12, 2);
+    date = calculator.g2h(2, 12, 2016);
     System.out.println(date.format("EEEE, d MMMM yyyy"));
 
     // Hijri to Gregorian
-    date = calculator.h2g(1438, 9, 1);
+    date = calculator.h2g(1, 9, 1438);
     System.out.println(date.format("EEE, d MMM yyyy"));
 ```
 

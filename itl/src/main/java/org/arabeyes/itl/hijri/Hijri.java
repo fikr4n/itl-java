@@ -26,8 +26,7 @@ public class Hijri {
      * @param month starts from 1 for January instead of 0
      * @param year  negative for before epoch, e.g. -1 for 1 BC
      */
-    public ConvertedDate hDate(int year, int month, int day) {
-        // TODO: 2017-04-01 dmy instead of ymd
+    public ConvertedDate hDate(int day, int month, int year) {
         HijriModule.sDate d = new HijriModule.sDate();
         int error;
         try {
@@ -52,7 +51,7 @@ public class Hijri {
         int year = cal.get(Calendar.YEAR);
         if (cal.get(Calendar.ERA) == GregorianCalendar.BC)
             year = 1 - year;
-        return hDate(year, cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH));
+        return hDate(cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH) + 1, year);
     }
 
     /**
@@ -62,7 +61,7 @@ public class Hijri {
      * @param month starts from 1 for Muharram instead of 0
      * @param year  negative for before epoch, e.g. -1 for 1 BH
      */
-    public ConvertedDate gDate(int year, int month, int day) {
+    public ConvertedDate gDate(int day, int month, int year) {
         HijriModule.sDate d = new HijriModule.sDate();
         int error;
         try {

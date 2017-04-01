@@ -26,7 +26,7 @@ public class UmmAlqura {
      * @param month starts from 1 for January instead of 0
      * @param year  negative for before epoch, e.g. -1 for 1 BC
      */
-    public ConvertedDate g2h(int year, int month, int day) {
+    public ConvertedDate g2h(int day, int month, int year) {
         HijriModule.sDate d = new HijriModule.sDate();
         int flag;
         try {
@@ -51,7 +51,7 @@ public class UmmAlqura {
         int year = cal.get(Calendar.YEAR);
         if (cal.get(Calendar.ERA) == GregorianCalendar.BC)
             year = 1 - year;
-        return g2h(year, cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH));
+        return g2h(cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH) + 1, year);
     }
 
     /**
@@ -61,7 +61,7 @@ public class UmmAlqura {
      * @param month starts from 1 for Muharram instead of 0
      * @param year  negative for before epoch, e.g. -1 for 1 BH
      */
-    public ConvertedDate h2g(int year, int month, int day) {
+    public ConvertedDate h2g(int day, int month, int year) {
         HijriModule.sDate d = new HijriModule.sDate();
         int flag;
         try {
