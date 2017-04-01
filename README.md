@@ -32,7 +32,7 @@ Examples below will show how simple using this library. Longer example is availa
             .setPressure(1010)
             .setTemperature(10)
             .setDate(new Date(), TimeZone.getDefault()); // today, here
-    TimeNames names = TimeNames.getInstance(null); // equivalent to Locale.getDefault()
+    TimeNames names = TimeNames.getInstance(Locale.getDefault()); // for getting prayer names
 
     // Calculate prayer times
     for (Map.Entry<TimeType, PrayerTime> time : calculator.getPrayerTimes().entrySet()) {
@@ -53,17 +53,17 @@ Examples below will show how simple using this library. Longer example is availa
 
 ```java
     // Initialize
-    Hijri calculator = new Hijri(null); // equivalent to Locale.getDefault()
+    Hijri calculator = new Hijri(Locale.getDefault()); // locale used for names (months, etc)
     ConvertedDate date;
 
     // Gregorian to Hijri
     date = calculator.hDate(2016, 12, 2); // or hDate(new Date());
     System.out.println(date.format("EEEE, d MMMM yyyy G")); // converted date
-    System.out.println(date.formatSource("EEE, dd-MM-yy")); // source (before converted)
-    System.out.printf("%s-%s-%s\n",
+    System.out.printf("%s-%s-%s\n", // converted date
             date.getDayOfMonth(),
             date.getMonth(),
             date.getYear());
+    System.out.println(date.formatSource("EEE, dd-MM-yy")); // source date (before converted)
     System.out.println(date.toDate());
 
     // Hijri to Gregorian
@@ -75,7 +75,7 @@ Examples below will show how simple using this library. Longer example is availa
 
 ```java
     // Initialize
-    UmmAlqura calculator = new UmmAlqura(null);
+    UmmAlqura calculator = new UmmAlqura(Locale.getDefault());
     ConvertedDate date;
 
     // Gregorian to Hijri
@@ -106,7 +106,7 @@ to use one of these built-in methods.
 - **Fixed Ishaa Angle Interval (always 90)** - Usually used in Bahrain, Oman, Qatar, United Arab
   Emirates.
 - **Moonsighting Committee Worldwide**
-- **Morocco Awqaf, Morocco**
+- **Morocco Awqaf Ministry, Morocco**
 
 ## Porting notes ##
 

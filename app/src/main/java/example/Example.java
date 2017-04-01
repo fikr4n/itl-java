@@ -18,6 +18,8 @@ import java.util.Map;
 import java.util.TimeZone;
 
 public class Example {
+    // TODO: 2017-04-01 javadoc
+    // TODO: 2017-04-01 mark exported classes and methods
 
     public static void main(String[] args) {
         showPrayerTime();
