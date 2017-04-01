@@ -4,6 +4,7 @@
 package org.arabeyes.itl.hijri;
 
 import org.arabeyes.itl.hijri.HijriModule.sDate;
+import org.arabeyes.itl.util.Formatter;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -56,65 +57,14 @@ public class ConvertedDate {
      *                                  format patterns above
      */
     public String format(String f) {
-        return format(f, this);
+        return Formatter.format(f, new TargetFormat());
     }
 
     /**
-     * Format input date. See {@link #format(String, ConvertedDate)} for format pattern.
+     * Format input date. See {@link #format(String)} for format pattern.
      */
     public String formatSource(String f) {
-        return format(f, new SourceDate(this));
-    }
-
-    private static String format(String f, ConvertedDate d) {
-        StringBuilder result = new StringBuilder();
-        int count = 0;
-        boolean inQuote = false;
-        for (int i = 0, last = f.length() - 1; i <= last; ++i) {
-            char c = f.charAt(i);
-            if (i > 0 && c == f.charAt(i - 1))
-                count++;
-            else
-                count = 1;
-
-            if (c == '\'') {
-                if (inQuote) {
-                    if (count == 2) result.append(c);
-                    inQuote = false;
-                    count = 0;
-                } else {
-                    inQuote = true;
-                }
-                continue;
-            } else if (inQuote) {
-                result.append(c);
-                continue;
-            }
-
-            if (i != last && c == f.charAt(i + 1))
-                continue;
-
-            if (c == 'E') {
-                result.append(count >= 4 ? d.getDayOfWeekName() : d.getDayOfWeekShortName());
-            } else if (c == 'd') {
-                result.append(String.format("%0" + count + "d", d.getDayOfMonth()));
-            } else if (c == 'M') {
-                if (count >= 3)
-                    result.append(count >= 4 ? d.getMonthName() : d.getMonthShortName());
-                else
-                    result.append(String.format("%0" + count + "d", d.getMonth()));
-            } else if (c == 'y') {
-                String s = String.format("%0" + count + "d", d.getYear());
-                result.append(count == 2 && s.length() > 2 ? s.substring(s.length() - 2) : s);
-            } else if (c == 'G') {
-                result.append(d.getEraName());
-            } else if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
-                throw new IllegalArgumentException("Illegal pattern character '" + c + "'");
-            } else {
-                for (int j = 0; j < count; ++j) result.append(c);
-            }
-        }
-        return result.toString();
+        return Formatter.format(f, new SourceFormat());
     }
 
     /**
@@ -207,7 +157,7 @@ public class ConvertedDate {
     }
 
     /**
-     * Era name.
+     * Era name or empty string if not available.
      */
     public String getEraName() {
         return date.units == null ? "" : names.get(date.units);
@@ -286,61 +236,55 @@ public class ConvertedDate {
 //        throw new UnsupportedOperationException();
 //    }
 
-    /**
-     * Such a hack.
-     */
-    private static class SourceDate extends ConvertedDate {
+    private class TargetFormat implements Formatter.Mapper {
 
-        SourceDate(ConvertedDate o) {
-            super(o.date, o.sourceYear, o.sourceMonth, o.sourceDay, o.names, o.type);
+        @Override
+        public Object applyFormat(char pattern, int count) {
+            switch (pattern) {
+                case 'E':
+                    return count >= 4 ? getDayOfWeekName() : getDayOfWeekShortName();
+                case 'd':
+                    return getDayOfMonth();
+                case 'M':
+                    return count >= 4 ? getMonthName() :
+                            (count >= 3 ? getMonthShortName() : getMonth());
+                case 'y':
+                    if (count == 2) {
+                        String s = String.format("%02d", getYear());
+                        return s.substring(s.length() - 2);
+                    }
+                    return getYear();
+                case 'G':
+                    return getEraName();
+                default:
+                    return null;
+            }
         }
+    }
 
-        public int getDayOfMonth() {
-            return getSourceDayOfMonth();
-        }
+    private class SourceFormat implements Formatter.Mapper {
 
-        public int getDayOfWeek() {
-            throw new UnsupportedOperationException();
-        }
-
-        public int getMonth() {
-            return getSourceMonth();
-        }
-
-        public int getYear() {
-            return getSourceYear();
-        }
-
-        public int getMonthLength() {
-            return getSourceMonthLength();
-        }
-
-        public String getDayOfWeekName() {
-            return getSourceDayOfWeekName();
-        }
-
-        public String getDayOfWeekShortName() {
-            return getSourceDayOfWeekShortName();
-        }
-
-        public String getMonthName() {
-            return getSourceMonthName();
-        }
-
-        public String getMonthShortName() {
-            return getSourceMonthShortName();
-        }
-
-        public String getEraName() {
-            return "";
-        }
-
-        public int getNextMonthLength() {
-            throw new UnsupportedOperationException();
-        }
-
-        public String getNextMonthName() {
-            throw new UnsupportedOperationException();
+        @Override
+        public Object applyFormat(char pattern, int count) {
+            switch (pattern) {
+                case 'E':
+                    return count >= 4 ? getSourceDayOfWeekName() : getSourceDayOfWeekShortName();
+                case 'd':
+                    return getSourceDayOfMonth();
+                case 'M':
+                    return count >= 4 ? getSourceMonthName() :
+                            (count >= 3 ? getSourceMonthShortName() : getSourceMonth());
+                case 'y':
+                    if (count == 2) {
+                        String s = String.format("%02d", getSourceYear());
+                        return s.substring(s.length() - 2);
+                    }
+                    return getSourceYear();
+                case 'G':
+                    return "";
+                default:
+                    return null;
+            }
         }
     }
 }

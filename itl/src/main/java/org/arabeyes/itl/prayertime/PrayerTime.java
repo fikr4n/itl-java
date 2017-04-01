@@ -3,10 +3,14 @@
  */
 package org.arabeyes.itl.prayertime;
 
+import org.arabeyes.itl.util.Formatter;
+
+import java.text.DateFormatSymbols;
+
 /**
  * This structure holds the prayer time output for a single prayer.
  */
-public class PrayerTime {
+public class PrayerTime implements Formatter.Mapper {
     int hour;
     int minute;
     int second;
@@ -47,13 +51,62 @@ public class PrayerTime {
     }
 
     /**
+     * Format time. The format is subset of {@link java.text.SimpleDateFormat} format
+     * pattern. Use single quote " ' " for escaping and double single-quote " '' " for single quote.
+     * <ul>
+     * <li>a - am/pm (text, based on current locale)
+     * <li>H - hour (number, 0-23)
+     * <li>k - hour (number, 1-24)
+     * <li>K - hour (number, 0-11)
+     * <li>h - hour (number, 1-12)
+     * <li>m - minute (number)
+     * <li>s - second (number)
+     * </ul>
+     * Notes:
+     * <ul>
+     * <li>number: will be zero padded based on number of characters
+     * <li>character other than 'a'-'z', 'A'-'Z', and single quote will be formatted as is
+     * </ul>
+     *
+     * @param f format pattern, must not be null
+     * @return formatted time
+     * @throws IllegalArgumentException if contains unquoted character 'a'-'z' or 'A'-'Z' other than
+     *                                  format patterns above
+     */
+    public String format(String f) {
+        return Formatter.format(f, this);
+    }
+
+    /**
      * Returns string representation of this time in "HH:mm:ss [(extreme)]" format.
      */
     @Override
     public String toString() {
-        return String.format("%02d:%02d:%02d%s", hour, minute, second, isExtreme != 0 ?
-                " (extreme)" : "");
+        return format("HH:mm:ss") + (isExtreme != 0 ? " (extreme)" : "");
     }
 
-    // TODO: 2017-03-29 format(String) or toDate()
+    @Override
+    public Object applyFormat(char pattern, int count) {
+        int tmp;
+        switch (pattern) {
+            case 'a':
+                return DateFormatSymbols.getInstance().getAmPmStrings()[getHour() < 12 ? 0 : 1];
+            case 'H':
+                return getHour();
+            case 'k':
+                tmp = getHour();
+                return tmp == 0 ? 24 : tmp;
+            case 'K':
+                return getHour() % 12;
+            case 'h':
+                tmp = getHour() % 12;
+                return tmp == 0 ? 12 : tmp;
+            case 'm':
+                return getMinute();
+            case 's':
+                return getSecond();
+            default:
+                return null;
+        }
+    }
 }

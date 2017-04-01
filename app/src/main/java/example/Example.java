@@ -65,7 +65,7 @@ public class Example {
         }
         // or
         for (PrayerTime time : calculator.getPrayerTimeArray()) {
-            System.out.println(time);
+            System.out.println(time.format("HH:mm:ss"));
         }
         System.out.printf("%s:\t%s\n", names.get(TimeType.IMSAAK), calculator.getImsaak());
         System.out.printf("%s:\t%s\n", names.get(TimeType.NEXTFAJR), calculator.getNextDayFajr());

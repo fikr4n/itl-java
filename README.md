@@ -42,7 +42,7 @@ Examples below will show how simple using this library. Longer example is availa
     }
     // or
     for (PrayerTime time : calculator.getPrayerTimeArray()) {
-        System.out.println(time);
+        System.out.println(time.format("HH:mm:ss"));
     }
 
     // Calculate qibla direction
