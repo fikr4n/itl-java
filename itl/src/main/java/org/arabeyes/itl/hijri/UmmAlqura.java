@@ -26,6 +26,7 @@ public class UmmAlqura {
      * @param month starts from 1 for January instead of 0
      * @param year  negative for before epoch, e.g. -1 for 1 BC
      */
+    @SuppressWarnings("WeakerAccess")
     public ConvertedDate g2h(int day, int month, int year) {
         HijriModule.sDate d = new HijriModule.sDate();
         int flag;

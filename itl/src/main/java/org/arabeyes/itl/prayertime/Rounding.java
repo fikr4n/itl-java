@@ -3,6 +3,7 @@
  */
 package org.arabeyes.itl.prayertime;
 
+@SuppressWarnings("WeakerAccess")
 public enum Rounding {
     /**
      * 0: No Rounding. "seconds" is set to the

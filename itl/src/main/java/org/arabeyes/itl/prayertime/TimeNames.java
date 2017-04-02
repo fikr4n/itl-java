@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 /**
  * This class is used for getting time names.
  */
+@SuppressWarnings("WeakerAccess")
 public class TimeNames {
 
     private static TimeNames instance;

@@ -10,6 +10,7 @@ import static java.lang.Math.abs;
 /**
  * Represents degree, minute, and second of an angle.
  */
+@SuppressWarnings("WeakerAccess")
 public class Dms implements Comparable<Dms> {
     private final int deg;
     private final int min;

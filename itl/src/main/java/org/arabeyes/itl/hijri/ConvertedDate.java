@@ -12,6 +12,7 @@ import java.util.GregorianCalendar;
 /**
  * Represents converted date as well as the input date.
  */
+@SuppressWarnings("WeakerAccess")
 public class ConvertedDate implements Comparable<ConvertedDate> {
 
     static final int TYPE_HIJRI = 0;

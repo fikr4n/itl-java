@@ -3,6 +3,7 @@
  */
 package org.arabeyes.itl.prayertime;
 
+@SuppressWarnings("WeakerAccess")
 public enum Mathhab {
     /**
      * 1: Shaf'i and jumhur/majority (default)

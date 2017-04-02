@@ -10,6 +10,7 @@ import java.text.DateFormatSymbols;
 /**
  * This structure holds the prayer time output for a single prayer.
  */
+@SuppressWarnings("WeakerAccess")
 public class PrayerTime implements Formatter.Mapper, Comparable<PrayerTime> {
     int hour;
     int minute;

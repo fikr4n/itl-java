@@ -28,6 +28,7 @@ public class Prayer {
     /**
      * @return self, for chaining
      */
+    @SuppressWarnings("WeakerAccess")
     public Prayer setMethod(Method method) {
         this.method = method;
 
@@ -82,6 +83,7 @@ public class Prayer {
         return this;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public Prayer setDate(GregorianCalendar calendar) {
         this.date = new SDate();
         this.date.day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -109,6 +111,7 @@ public class Prayer {
      * calling this method.
      * @return time of Fajr, Shurooq, Zuhr, Assr, Maghrib, Ishaa respectively
      */
+    @SuppressWarnings("WeakerAccess")
     public PrayerTime[] getPrayerTimeArray() {
         checkConfig();
         return PrayerModule.getPrayerTimes(location, method, date);

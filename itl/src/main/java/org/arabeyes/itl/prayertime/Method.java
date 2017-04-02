@@ -109,9 +109,10 @@ public class Method {
      */
     double[] offList = new double[6];
 
-    public Method() {
+    Method() {
     }
 
+    @SuppressWarnings("WeakerAccess")
     public Method(Method src) {
         this.method = src.method;
         this.fajrAng = src.fajrAng;
@@ -132,6 +133,7 @@ public class Method {
     /**
      * Create new instance of this class by using values from a standard method.
      */
+    @SuppressWarnings("WeakerAccess")
     public static Method fromStandard(StandardMethod m) {
         return PrayerModule.getMethod(m);
     }
