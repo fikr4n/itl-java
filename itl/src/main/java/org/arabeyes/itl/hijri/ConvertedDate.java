@@ -12,7 +12,7 @@ import java.util.GregorianCalendar;
 /**
  * Represents converted date as well as the input date.
  */
-public class ConvertedDate {
+public class ConvertedDate implements Comparable<ConvertedDate> {
 
     static final int TYPE_HIJRI = 0;
     static final int TYPE_UMM_ALQURA = 1;
@@ -250,6 +250,27 @@ public class ConvertedDate {
         int result = date.hashCode();
         result = 31 * result + type;
         return result;
+    }
+
+    /**
+     * Like {@link Comparable#compareTo(Object)}, but calendar type must be same.
+     *
+     * @throws ClassCastException if different class or different calendar type
+     */
+    @Override
+    public int compareTo(ConvertedDate o) {
+        if (equals(o)) return 0; // different source can be same result
+
+        if (getClass() != o.getClass())
+            throw new ClassCastException("Can't compare with instance of " + o.getClass());
+        if (type != o.type)
+            throw new ClassCastException("Can't compare date of different calendar: type " +
+                    type + " vs type " + o.type);
+
+        // compare only the source
+        if (sourceYear != o.sourceYear) return sourceYear - o.sourceYear;
+        if (sourceMonth != o.sourceMonth) return sourceMonth - o.sourceMonth;
+        return sourceDay - o.sourceDay;
     }
 
     // Inner type

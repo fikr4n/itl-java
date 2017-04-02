@@ -10,7 +10,7 @@ import static java.lang.Math.abs;
 /**
  * Represents degree, minute, and second of an angle.
  */
-public class Dms {
+public class Dms implements Comparable<Dms> {
     private final int deg;
     private final int min;
     private final double sec;
@@ -94,5 +94,20 @@ public class Dms {
         long temp = Double.doubleToLongBits(sec);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
+    }
+
+    /**
+     * See {@link Comparable#compareTo(Object)}
+     *
+     * @throws ClassCastException if different class
+     */
+    @Override
+    public int compareTo(Dms dms) {
+        if (getClass() != dms.getClass())
+            throw new ClassCastException("Can't compare with instance of " + dms.getClass());
+
+        if (deg != dms.deg) return deg - dms.deg;
+        if (min != dms.min) return min - dms.min;
+        return Double.compare(sec, dms.sec);
     }
 }

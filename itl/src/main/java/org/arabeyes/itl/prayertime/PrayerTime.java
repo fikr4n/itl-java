@@ -10,7 +10,7 @@ import java.text.DateFormatSymbols;
 /**
  * This structure holds the prayer time output for a single prayer.
  */
-public class PrayerTime implements Formatter.Mapper {
+public class PrayerTime implements Formatter.Mapper, Comparable<PrayerTime> {
     int hour;
     int minute;
     int second;
@@ -127,5 +127,22 @@ public class PrayerTime implements Formatter.Mapper {
         result = 31 * result + second;
         result = 31 * result + (int) isExtreme;
         return result;
+    }
+
+    /**
+     * See {@link Comparable#compareTo(Object)}. Extreme status ({@link #isExtreme()}) is compared
+     * last.
+     *
+     * @throws ClassCastException if different class
+     */
+    @Override
+    public int compareTo(PrayerTime o) {
+        if (getClass() != o.getClass())
+            throw new ClassCastException("Can't compare with instance of " + o.getClass());
+
+        if (hour != o.hour) return hour - o.hour;
+        if (minute != o.minute) return minute - o.minute;
+        if (second != o.second) return second - o.second;
+        return isExtreme - o.isExtreme;
     }
 }
