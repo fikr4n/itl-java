@@ -25,11 +25,8 @@
  */
 package org.arabeyes.itl.newmethod;
 
-import org.arabeyes.itl.newmethod.DefsModule.asr_method_t;
 import org.arabeyes.itl.newmethod.DefsModule.date_t;
-import org.arabeyes.itl.newmethod.DefsModule.extr_method_t;
 import org.arabeyes.itl.newmethod.DefsModule.location;
-import org.arabeyes.itl.newmethod.DefsModule.method_id_t;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -118,12 +115,12 @@ class ConfigModule {
             } else if (valid_keys.altitude.equals(key)) {
                 loc.altitude = Double.parseDouble(value);
             } else if (valid_keys.asr_method.equals(key)) {
-                loc.asr_method = asr_method_t.values()[Integer.parseInt(value)];
+                loc.asr_method = AsrMethod.values()[Integer.parseInt(value)];
             } else if (valid_keys.calc_method.equals(key)) {
                 method_id = Integer.parseInt(value);
                 loc.calc_method = calc_methods[method_id];
             } else if (valid_keys.extr_method.equals(key)) {
-                loc.extr_method = extr_method_t.values()[Integer.parseInt(value)];
+                loc.extr_method = ExtremeMethod.values()[Integer.parseInt(value)];
             } else if (valid_keys.timezone.equals(key)) {
                 loc.timezone = Double.parseDouble(value);
             } else if (valid_keys.daylight.equals(key)) {
@@ -145,9 +142,9 @@ class ConfigModule {
         loc.latitude = 51.408311;
         loc.longitude = 5.454939;
         loc.altitude = 5;
-        loc.asr_method = asr_method_t.SHAFII;
-        loc.calc_method = calc_methods[method_id_t.MWL.ordinal()];
-        loc.extr_method = extr_method_t.NONE;
+        loc.asr_method = AsrMethod.SHAFII;
+        loc.calc_method = calc_methods[MethodId.MWL.ordinal()];
+        loc.extr_method = ExtremeMethod.NONE;
         loc.timezone = 1;
         loc.daylight = 0;
     }

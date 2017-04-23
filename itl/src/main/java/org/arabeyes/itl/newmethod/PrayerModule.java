@@ -14,15 +14,8 @@
 package org.arabeyes.itl.newmethod;
 
 import org.arabeyes.itl.newmethod.DefsModule.approx_sun_coord;
-import org.arabeyes.itl.newmethod.DefsModule.asr_method_t;
-import org.arabeyes.itl.newmethod.DefsModule.calc_method_t;
 import org.arabeyes.itl.newmethod.DefsModule.date_t;
-import org.arabeyes.itl.newmethod.DefsModule.event_t;
-import org.arabeyes.itl.newmethod.DefsModule.extr_method_t;
-import org.arabeyes.itl.newmethod.DefsModule.isha_flag_t;
 import org.arabeyes.itl.newmethod.DefsModule.location;
-import org.arabeyes.itl.newmethod.DefsModule.method_id_t;
-import org.arabeyes.itl.newmethod.DefsModule.prayer_times;
 import org.arabeyes.itl.newmethod.DefsModule.round_t;
 
 import static java.lang.Math.acos;
@@ -40,17 +33,17 @@ import static org.arabeyes.itl.newmethod.DefsModule.M_PI;
 import static org.arabeyes.itl.newmethod.DefsModule.ONE_MINUTE;
 
 class PrayerModule {
-    static calc_method_t calc_methods[] = {
-            new calc_method_t(method_id_t.MWL, "Muslim World League (MWL)",
-                    isha_flag_t.ANGLE, 18, 17),
-            new calc_method_t(method_id_t.ISNA, "Islamic Society of North America (ISNA)",
-                    isha_flag_t.ANGLE, 15, 15),
-            new calc_method_t(method_id_t.EGAS, "Egyptian General Authority of Survey",
-                    isha_flag_t.ANGLE, 19.5, 17.5),
-            new calc_method_t(method_id_t.UMAQ, "Umm Al-Qura University, Makkah",
-                    isha_flag_t.OFFSET, 18.5, 90),
-            new calc_method_t(method_id_t.UIS, "University of Islamic Sciences, Karachi",
-                    isha_flag_t.ANGLE, 18, 18)
+    static CalcMethod calc_methods[] = {
+            new CalcMethod(MethodId.MWL, "Muslim World League (MWL)",
+                    IshaFlag.ANGLE, 18, 17),
+            new CalcMethod(MethodId.ISNA, "Islamic Society of North America (ISNA)",
+                    IshaFlag.ANGLE, 15, 15),
+            new CalcMethod(MethodId.EGAS, "Egyptian General Authority of Survey",
+                    IshaFlag.ANGLE, 19.5, 17.5),
+            new CalcMethod(MethodId.UMAQ, "Umm Al-Qura University, Makkah",
+                    IshaFlag.OFFSET, 18.5, 90),
+            new CalcMethod(MethodId.UIS, "University of Islamic Sciences, Karachi",
+                    IshaFlag.ANGLE, 18, 18)
     };
 
     /**
@@ -227,7 +220,7 @@ class PrayerModule {
         assert (dhuhr > 0.0);
         assert (loc != null);
         assert (coord != null);
-        assert (loc.asr_method == asr_method_t.SHAFII || loc.asr_method == asr_method_t.HANAFI);
+        assert (loc.asr_method == AsrMethod.SHAFII || loc.asr_method == AsrMethod.HANAFI);
 
         switch (loc.asr_method) {
             case SHAFII:
@@ -284,7 +277,7 @@ class PrayerModule {
         assert (loc != null);
         assert (coord != null);
 
-        if (loc.extr_method == extr_method_t.NONE) {
+        if (loc.extr_method == ExtremeMethod.NONE) {
             /* Normal latitude. Use the classical methods */
             fajr = dhuhr - T(loc.calc_method.fajr,
                     loc.latitude,
@@ -311,8 +304,8 @@ class PrayerModule {
         assert (loc != null);
         assert (coord != null);
 
-        if (loc.extr_method == extr_method_t.NONE) {
-            if (loc.calc_method.isha_type == isha_flag_t.OFFSET) {
+        if (loc.extr_method == ExtremeMethod.NONE) {
+            if (loc.calc_method.isha_type == IshaFlag.OFFSET) {
                 /* Umm Al-Qura uses a fixed offset */
                 isha = sunset + loc.calc_method.isha * ONE_MINUTE;
             } else {
@@ -338,7 +331,7 @@ class PrayerModule {
     private static void conv_time_to_event(final int julian_day,
                                            final double decimal_time,
                                            final round_t rounding,
-                                           event_t t) {
+                                           Event t) {
         double r = 0.0, f = 0.0;
 
         assert (julian_day > 0);
@@ -386,7 +379,7 @@ class PrayerModule {
 
     static void get_prayer_times(date_t date,
                                  location loc,
-                                 prayer_times pt) {
+                                 PrayerTimes pt) {
         int jdn, jdn_next, jdn_prev;
         double true_noon, sunrise, sunset;
         double noon_next, sunrise_next;

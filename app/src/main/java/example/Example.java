@@ -18,11 +18,11 @@ import java.util.Map;
 import java.util.TimeZone;
 
 public class Example {
-    // TODO: 2017-04-01 implement new method algorithm
     // TODO: 2017-04-01 create unit tests
 
     public static void main(String[] args) {
         showPrayerTime();
+        NewMethod.main(args);
         showHijri();
         showUmmAlqura();
     }

@@ -27,9 +27,7 @@ package org.arabeyes.itl.newmethod;
 
 import org.arabeyes.itl.newmethod.ConfigModule.output_t;
 import org.arabeyes.itl.newmethod.DefsModule.date_t;
-import org.arabeyes.itl.newmethod.DefsModule.isha_flag_t;
 import org.arabeyes.itl.newmethod.DefsModule.location;
-import org.arabeyes.itl.newmethod.DefsModule.prayer_times;
 
 import java.util.GregorianCalendar;
 
@@ -44,7 +42,7 @@ class MainModule {
         final location loc = new location();
         final date_t date = new date_t();
         double qibla;
-        final prayer_times pt = new prayer_times();
+        final PrayerTimes pt = new PrayerTimes();
         final output_t[] output = new output_t[1];
         int rsp;
 
@@ -75,7 +73,7 @@ class MainModule {
                             "%s, Fajr angle: %.2f," +
                             " Isha %s: %.2f\n",
                     loc.calc_method.name, loc.calc_method.fajr,
-                    (loc.calc_method.isha_type == isha_flag_t.ANGLE ?
+                    (loc.calc_method.isha_type == IshaFlag.ANGLE ?
                             "angle" : "offset"),
                     loc.calc_method.isha);
 

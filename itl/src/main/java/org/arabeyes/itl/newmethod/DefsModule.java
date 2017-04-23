@@ -45,33 +45,6 @@ class DefsModule {
     }
 
     /**
-     * Asr Method
-     */
-    enum asr_method_t {
-        SHAFII, HANAFI
-    }
-
-    /**
-     * Umm Al-Qura uses an offset instead of an angle
-     */
-    enum isha_flag_t {
-        ANGLE, OFFSET
-    }
-
-    enum method_id_t {MWL, ISNA, EGAS, UMAQ, UIS}
-
-    /**
-     * Extreme Latitude Method
-     * TODO: extreme latitudes are still WIP
-     */
-    enum extr_method_t {
-        NONE,
-        ANGLE_BASED,
-        ONE_SEVENTH_OF_NIGHT,
-        MIDDLE_OF_NIGHT
-    }
-
-    /**
      * The approximate Sun coordinates for a given Julian Day Number
      */
     static class approx_sun_coord {
@@ -80,26 +53,6 @@ class DefsModule {
         double R;   /* The distance of the Sun from the Earth
                    in astronomical units (AU)  */
         double SD;  /* The angular semidiameter of the Sun in degrees */
-    }
-
-    static class calc_method_t {
-        /* In original C: The order of struct members below guarantees
-         * that the compiler doesn't add padding bytes automatically
-         * on 64-bit architectures */
-
-        method_id_t id;         /* Method ID */
-        String name;   /* Full name of the method */
-        isha_flag_t isha_type;  /* Angle or offset? */
-        double fajr;       /* Fajr angle */
-        double isha;       /* Value for Isha angle/offset */
-
-        calc_method_t(method_id_t id, String name, isha_flag_t isha_type, double fajr, double isha) {
-            this.id = id;
-            this.name = name;
-            this.isha_type = isha_type;
-            this.fajr = fajr;
-            this.isha = isha;
-        }
     }
 
     /**
@@ -116,36 +69,19 @@ class DefsModule {
                                   to Universal Coordinated Time (UTC) */
         int daylight;    /* Daylight Savings Time (DST) Flag
                                   Set to 1 if DST is on, 0 otherwise */
-        asr_method_t asr_method;  /* Asr Method: Shafii or Hanafi */
-        calc_method_t calc_method; /* Fajr and Isha Calculation method */
-        extr_method_t extr_method; /* Extreme latitude method */
+        AsrMethod asr_method;  /* Asr Method: Shafii or Hanafi */
+        CalcMethod calc_method; /* Fajr and Isha Calculation method */
+        ExtremeMethod extr_method; /* Extreme latitude method */
         String name;    /* Observer's location name */
-    }
-
-    /**
-     * Holds the time of a single event (i.e., prayer or sunrise)
-     */
-    static class event_t {
-        int julian_day;  /* The Julian day of the event */
-        int hour;        /* Hour */
-        int minute;      /* Minute */
-    }
-
-    /**
-     * Holds all the prayers/events times of a given day
-     */
-    static class prayer_times {
-        event_t fajr = new event_t();
-        event_t sunrise = new event_t();
-        event_t dhuhr = new event_t();
-        event_t asr = new event_t();
-        event_t maghrib = new event_t();
-        event_t isha = new event_t();
     }
 
     static class date_t {
         int year, month, day;
 
+        /**
+         * @param day starts from 1
+         * @param month starts from 1, like the old ITL
+         */
         date_t set(int day, int month, int year) {
             this.year = year;
             this.month = month;
